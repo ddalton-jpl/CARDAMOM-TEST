@@ -28,10 +28,10 @@ case 2
         %plotting only continental outlines
         load('CARDAMOM/DATA/MAPS/worldmap.mat');
         plot(lonlat(:,1),lonlat(:,2),'Color',col)
-    case 3 
+    case 3
         %omit antarctica;
                 load('/CARDAMOM/DATA/MAPS/worldmap.mat')
- 
+
         lonlata=lonlat;
         plot(lonlat(:,1),lonlat(:,2),'Color',col)
                         lonlata(lonlat(:,2)>-60,:)=NaN;
@@ -46,7 +46,7 @@ if rivers
     load riverdata
     %Plotting: Amazon(111,112,118), Congo(113,115), Ganges(88,89),
     %Niger(99,103), Nile(77,78,105, 107),Tigris(25), Euphrates(26),
-    %Danube(54), Volga(50) Mississippi +Missouri (60,66,71,83), Indus(86), 
+    %Danube(54), Volga(50) Mississippi +Missouri (60,66,71,83), Indus(86),
     %Ganges+brahma(87,88,89), Orinoco(104), Yangtze(84), Xi(90), Yellow(69,73)
     rivindex=[111,112,118,113,115,88,89,99,103,77,78,105,107,75,76,54,...
         50,60,66,71,69,73,83,84,86,87:89,104,90];
@@ -55,6 +55,3 @@ if rivers
 
     end
 end
-
-    
-    

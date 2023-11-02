@@ -14,6 +14,3 @@ T_C=-50:50;
 
 
 Vcmax = vcmax25.*q_10.^(0.1.*(T_C-25.))./((1 + exp(0.3.*(T_C-(Tupp-DGCM_TK0C)))).*(1 +exp(0.3.*((Tdown-DGCM_TK0C)-T_C))));
-
-
-

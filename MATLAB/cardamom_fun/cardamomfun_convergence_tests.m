@@ -29,10 +29,10 @@ elseif isstruct(A1) & isfield(A1,'run_name');
     %Recognizes PXI format[gr]=cardamomfun_convergence_tests
     PXI=A1;
     [gr]=cardamomfun_convergence_tests_pxi(PXI);
-    
+
 end
-    
-    
+
+
 
 
 
@@ -42,12 +42,12 @@ function     PXI=cardamomfun_convergence_tests_pxi(PXI)
 
 %Step 1. loop through all cbr files
     MD=CARDAMOM_MODEL_LIBRARY(PXI.ID);
-    
+
 PXI.chain_convergence_max_gr_map=PXI.area*NaN;
 
 for n=1:size(PXI.cbrfilename)
     cbrfiles=PXI.cbrfilename(n,PXI.chains(n,:)>0);
-    
+
     if isempty(cbrfiles)==0
     %open cbr files
     [PARS,ANC]=CARDAMOM_READ_BINARY_FILEFORMAT(cbrfiles,MD);
@@ -65,8 +65,8 @@ PXI.chain_convergence(n,:)=gr;
     else
         PXI.chain_convergence(n,:)=nan(1,MD.nopars);
     end
-    
-    
+
+
 end
 
 %Add map here
@@ -86,7 +86,7 @@ PARS(:,[12,15])=mod(PARS(:,[12,15]),365.25)+365.25;
 else
     PARS(:,[6,9])=mod(PARS(:,[6,9]),365.25)+365.25;
 end
-    
+
 NPARSall=MD.par2nor(PARS);
 
 k=1;N=size(NPARSall,1);%nc=total(chains);

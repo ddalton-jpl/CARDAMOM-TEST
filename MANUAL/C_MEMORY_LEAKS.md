@@ -35,14 +35,14 @@ CARDAMOM/C/projects/CARDAMOM_GENERAL/CARDAMOM_RUN_MODEL_debug.exe Desktop/1_AT-N
 
 
 "gcc -g -fsanitize=address -o leak leak.c"
-this will output leak 
+this will output leak
 
 
 
 - Memory usage too high on parallel cluster, what should I do?
 
 Option 1. Check memory usage with Mac.
-Option 2. 
+Option 2.
 
 
 

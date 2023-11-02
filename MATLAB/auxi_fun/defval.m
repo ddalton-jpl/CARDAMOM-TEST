@@ -2,24 +2,24 @@ function defval(name,value)
 % DEFVAL(name,value)
 %
 % Assigns a default value to the named variable
-% 
+%
 % INPUT:
-% 
+%
 % name    A string, enclosed in single quotes, with a variable name
-% value   The value, whatever it is, that you want the variable to have 
+% value   The value, whatever it is, that you want the variable to have
 %
 % OUTPUT:
 %
 %      None. The variables appear as if by magic into your workspace or
 %      will be available inside your function.
 %
-% NOTE: 
+% NOTE:
 %
 % This won't work for an unassigned structure variable.
 %
 % Last modified by ebrevdo-at-alumni-princeton.edu, 05/28/2011
 % Last modified by fjsimons-at-alum.mit.edu, 12/20/2012
-% 
+%
 % It appears that defval('bla',functioncall) evaluates the function call
 % regardless of whether or not 'bla' has been assigned.
 
@@ -39,4 +39,3 @@ end
 if si
   assignin('caller',name,value);
 end
-  

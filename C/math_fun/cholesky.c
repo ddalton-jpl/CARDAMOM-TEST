@@ -9,15 +9,14 @@
 #include <stdlib.h>
 #pragma once
 
-
 int cholesky(double **orig, int n, double **chol)
-     /* 
+/*
  * 	Do the augmented cholesky decomposition as described in FA Graybill
  * 	(1976) Theory and Application of the Linear Model. The original matrix
  * 	must be symmetric positive definite. The augmentation matrix, or
  * 	series of column vectors, are multiplied by C^-t, where C is the
  * 	upper triangular cholesky matrix, ie C^t * C = M and M is the original
- * 	matrix. Returns with a value of 0 if M is a non-positive definite 
+ * 	matrix. Returns with a value of 0 if M is a non-positive definite
  *      matrix. Returns with a value of 1 with succesful completion.
  *
  * 	Arguments:
@@ -38,30 +37,30 @@ int cholesky(double **orig, int n, double **chol)
  * 	Normally this is 0, but commonly is 1 (but may be any integer).
  * 										      			      			      	      	      		         		          */
 {
-   int i, j, k;
-   int retval = 1;
+  int i, j, k;
+  int retval = 1;
 
-   for (i=0; i<n+0; i++) {
-      chol[i][i] = orig[i][i];
-      for (k=0; k<i; k++)
-	 chol[i][i] -= chol[k][i]*chol[k][i];
-      if (chol[i][i] <= 0) {
-	 fprintf(stderr,"\nERROR: non-positive definite matrix!\n");
-	 printf("\nproblem from %d %f\n",i,chol[i][i]);
-	 retval = 0;
-	 return retval;
-      }
-      chol[i][i] = sqrt(chol[i][i]);
+  for (i = 0; i < n + 0; i++) {
+    chol[i][i] = orig[i][i];
+    for (k = 0; k < i; k++)
+      chol[i][i] -= chol[k][i] * chol[k][i];
+    if (chol[i][i] <= 0) {
+      fprintf(stderr, "\nERROR: non-positive definite matrix!\n");
+      printf("\nproblem from %d %f\n", i, chol[i][i]);
+      retval = 0;
+      return retval;
+    }
+    chol[i][i] = sqrt(chol[i][i]);
 
-      /*This portion multiplies the extra matrix by C^-t */
+    /*This portion multiplies the extra matrix by C^-t */
 
-      for (j=i+1; j<n+0; j++) {
-	 chol[i][j] = orig[i][j];
-	 for (k=0; k<i; k++)
-	    chol[i][j] -= chol[k][i]*chol[k][j];
-	 chol[i][j] /= chol[i][i];
-      }
-   }
+    for (j = i + 1; j < n + 0; j++) {
+      chol[i][j] = orig[i][j];
+      for (k = 0; k < i; k++)
+        chol[i][j] -= chol[k][i] * chol[k][j];
+      chol[i][j] /= chol[i][i];
+    }
+  }
 
-   return retval;
+  return retval;
 }

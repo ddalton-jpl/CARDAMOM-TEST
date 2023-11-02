@@ -37,5 +37,3 @@ end
 %only for one percentile for now...
 
 eval(['aperc=a(',dimstr,');']);
-
-

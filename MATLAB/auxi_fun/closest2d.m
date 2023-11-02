@@ -2,8 +2,8 @@ function [pti,ri,ci]=closest2d(xp,yp,x,y,irregular)
 
 %FUNCTION [P,R,C]=CLOSEST2D(XP,YP,X,Y,IRREGULAR)
 %
-%IN: 
-%Xpoints, Ypoints: coordinate(s) of point(s) to be matched to nearest gridcell(s) 
+%IN:
+%Xpoints, Ypoints: coordinate(s) of point(s) to be matched to nearest gridcell(s)
 %
 %Xgrid, Ygrid: X-Y grid coordinates
 %
@@ -25,7 +25,7 @@ ri=xp*0;
 ci=xp*0;
 defval('irregular',1)
 
-switch irregular 
+switch irregular
 case 0
 %ASSUMING CONSTANT INTERVALS
 minx=x(1,1);
@@ -75,9 +75,9 @@ case 1
    end
    nrows=size(x,1);
    pti=(ci-1)*nrows+ri;
-   
 
-   
+
+
 case 2
    p=xp*0;
    for n=1:length(p)
@@ -89,8 +89,8 @@ case 2
    pti=p;
    ri=[];
    ci=[];
-   
-   
+
+
     case 3 % for vectors only
          p=xp*0;
          i=1:length(x);
@@ -102,8 +102,8 @@ case 2
    end
    ri=[];
    ci=[];
-      
-   
+
+
 
 end
 
@@ -113,4 +113,3 @@ ri=round(ri);
 ci=round(ci);
 
 end
-

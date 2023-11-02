@@ -3,7 +3,7 @@ function V=readbinarymat(file,dims,doubleint)
 %
 %reads binary file FILE
 %FILE contains N elements to be ordered with r rows and c columns, where
-%N=r x c; 
+%N=r x c;
 %
 %function written for double precision values (e.g. MHMCMC output)
 %
@@ -21,7 +21,7 @@ VV=fread(fd,inf,'real*8');
 elseif doubleint==2
     VV=fread(fd,inf,'int');
 end
-    
+
 %If one dimension is omitted (i.e. dims(n)==0) then it is completed based
 %on the remaining requested dims and number of elements in file
 if nargin<2 | isempty(dims);

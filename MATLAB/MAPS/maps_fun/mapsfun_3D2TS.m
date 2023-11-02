@@ -2,8 +2,8 @@ function TS=mapsfun_3D2TS(M3,AW,normts)
 %TS=mapsfun_3D2TS(M3,AW,normts)
 %
 %M3 = 3D array with layers = timestepss, and each layer is a global map.
-% Areea weights 
-%normts = 1 IF you want area mean, 
+% Areea weights
+%normts = 1 IF you want area mean,
 %normts = 0 IF youu want area total
 %
 defval('normts',1);

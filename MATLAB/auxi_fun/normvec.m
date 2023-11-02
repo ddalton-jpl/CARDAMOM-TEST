@@ -9,7 +9,7 @@ if length(a)<numel(a)
         b(n,:)=normvec(a(n,:),md);
     end
 else
-            
+
 
     if md==1
     b=a/mean(a);
@@ -23,7 +23,7 @@ else
     end
 
 end
-    
+
 
 
 end

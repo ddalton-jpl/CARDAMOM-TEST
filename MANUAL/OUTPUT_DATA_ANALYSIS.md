@@ -12,7 +12,7 @@ The content of this section will include:
     * [Output data format for parameters]
     * [Output data format for states and fluxes]
     * [Reading data]
-    
+
 - [Intro to analyzing data]
     * [CARDAMOM Ensemble and Summary Statistics]
     * [Basic data plots]
@@ -25,16 +25,16 @@ The content of this section will include:
     * [Cost Function]
 
 
-## CARDAMOM state and flux conventions 
+## CARDAMOM state and flux conventions
 
 - Initial conditions correspond to pools (states) at first timestep t = 0
 - Model Meteorological forcing at timestep t is centered between pools (states) t and t+1
-- Model fluxes at timestep t also centered between states t and t +1 
+- Model fluxes at timestep t also centered between states t and t +1
 
 
 <img width="830" alt="image" src="https://user-images.githubusercontent.com/23563444/117489093-086c5b80-af22-11eb-8006-693c716d142f.png">
 
-*In CARDAMOM C code* 
+*In CARDAMOM C code*
 See conventions above
 
 *For Matlab users*
@@ -60,8 +60,8 @@ Description: general rules and guidelines for estimating and propagating uncerta
 "rule no 1." (some funny movie reference)
 "Rule no 2.": perform operation on data before calculating uncertainty (on states and fluxes?)
 
-- example: detrending state and flux data. 
-  - Step 1. Detrend every CARDAMOM sample 
+- example: detrending state and flux data.
+  - Step 1. Detrend every CARDAMOM sample
   - Step 2. Calculate percentile/statistics based on detrended dataset.
 
 Other examples:
@@ -95,7 +95,7 @@ Note on above examples: mean GPP IAV is **not** equal to mean of GPP IAV values 
 ***How to aggregate statistics between pixels***
 General issue: no information on correlation between samples between pixels. However, some uncertainty estimation generally required
 
-Dilemma. Two pixels, one with mean GPP = 0.2 gC/m2/d (desert), and another with GPP = 10 gC/m2/d (rainforest). How to you aggregate IAVs (if at all)? 
+Dilemma. Two pixels, one with mean GPP = 0.2 gC/m2/d (desert), and another with GPP = 10 gC/m2/d (rainforest). How to you aggregate IAVs (if at all)?
 
 
 
@@ -188,7 +188,3 @@ Dilemma. Two pixels, one with mean GPP = 0.2 gC/m2/d (desert), and another with 
 |           | Resilience factor (since transfer to litter is represented as (1-pars[30])) ". |       |0.01 - 1|
 |           | Lab pool lifespan                                                              |       |1.001 - 8.0|
 |           | Moisture factor                                                                |       |0.01 - 1.0|
-
-
-
-

@@ -1,7 +1,7 @@
 
 # SUMMARY
 ### CARDAMOM community collaborative manual
-***Anthony Bloom, Gregory R Quetin, Victoria Meyer, Paul Levine, Shuang Ma, Renato Braghiere, Jessie Au, Matthew Worden, Sarah Worden and others***  
+***Anthony Bloom, Gregory R Quetin, Victoria Meyer, Paul Levine, Shuang Ma, Renato Braghiere, Jessie Au, Matthew Worden, Sarah Worden and others***
 [If you’re making any edits, add your name here!]
 
 Start here! This is the summary of the CARDAMOM community collaborative manual. Each section has a brief summary of a part of the manual and a link to a more detailed source. This manual covers everything from getting started runing CARDAMOM to example analysis and model development. See table of contexts and section curators below. Curators are in charge of (i) starting a new markdown page and moving content there, and (2) getting other people to contribute content where necessary. Use this manual collaboratively with the CARDAMOM team.
@@ -31,17 +31,17 @@ Start here! This is the summary of the CARDAMOM community collaborative manual. 
 
 
 
- 
+
 ## Getting Started with CARDAMOM <a name="-getting-started"/>
   ***Curator: Jessie Au, [Link to section](MANUAL/GETTING_STARTED.md)
- 
+
 This section covers everything to get you up and running, including "Installing" CARDAMOM, a must read for using the GitHub repository, and demos in both Matlab and Python for running CARDAMOM.
 <br/>
 <br/>
 
 
 
-## Running CARDAMOM 
+## Running CARDAMOM
   ***curator: Paul Levine, [Link to section]()
 
 This section outlines setting up CARDAMOM runs now that it is downloaded and tested (see above). The first example will be CARDAMOM run from the command line, followed by descriptions of CARDAMOM wrappers - written in both *Matlab* and *Python*. Code availability and description across platforms is on a case-by-case basis. The basic steps of running CARDAMOM consists of an 'assimilation run', where CARDAMOM is fed drivers and observations through the CBF. This run produces a set of parameters that are constrained by the observations. Finally, a CARDAMOM forward run uses these parameters to predict the states and fluxes of the carbon cycle through time (Figure).
@@ -135,7 +135,7 @@ Quetin, G. R., Bloom, A. A., Bowman, K. W., & Konings, A. G. (2020). Carbon Flux
 Famiglietti, C.A., Smallman, T.L., Levine, P.A., Flack-Prain, S., Quetin, G.R., Meyer, V., Parazoo, N.C., Stettz, S.G., Yang, Y., Bonal, D. and Bloom, A.A., 2021. Optimal model complexity for terrestrial carbon cycle prediction. Biogeosciences, 18(8), pp.2727-2754.
 
 Bloom, A. A., Bowman, K. W., Liu, J., Konings, A. G., Worden, J. R., Parazoo, N. C., et al. (2020). Lagged effects dominate the inter-annual variability of the 2010-2015 tropical carbon balance (preprint). Biogeochemistry: Land. https://doi.org/10.5194/bg-2019-459
- 
+
 Yin, Y., Bloom, A.A., Worden, J., Saatchi, S., Yang, Y., Williams, M., Liu, J., Jiang, Z., Worden, H., Bowman, K. and Frankenberg, C., 2020. Fire decline in dry tropical ecosystems enhances decadal land carbon sink. Nature communications, 11(1), pp.1-7.
 <br/>
 <br/>
@@ -146,5 +146,5 @@ Yin, Y., Bloom, A.A., Worden, J., Saatchi, S., Yang, Y., Williams, M., Liu, J., 
 ## Manual Development Notes <a name="-getting-started"/>
  * Ad-hoc material to "file" away in manual contents
  * Fill value conventions: Nans and -9999
- * DOM = all dead organic C states, SOM = only DALEC soil 
+ * DOM = all dead organic C states, SOM = only DALEC soil
  * Also: link at end of each section to get to next section (e.g. previous, next, and "back to summary", definitely include that in all files).

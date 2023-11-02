@@ -13,11 +13,11 @@ FIELDS(1).overwrite=0;
 FIELDS(2).name='ET_MEAN_SEASONAL_CYCLE';
 FIELDS(2).func=@(CBR,CBF) pauls_sens_test(CBR.ET);
 FIELDS(2).overwrite=0;
-% 
+%
 % FIELDS(2).name='GPP_ANNUAL_DETREND';
 % FIELDS(2).func=@(CBR,CBF) detrend(monthly2annual(CBR.GPP)')';
 % FIELDS(2).overwrite=0;
-% 
+%
 % FIELDS(3).name='NBE_ANNUAL_DETREND3';
 % FIELDS(3).func=@(CBR,CBF) detrend(monthly2annual(CBR.NBE)',3)';
 % FIELDS(3).overwrite=0;
@@ -38,8 +38,3 @@ CARFIELDS=CARDAMOM_PROJECT_OUTPUTS_beta(PXIv1,FIELDS);
 %
 %
 6
-
-
-
-
-

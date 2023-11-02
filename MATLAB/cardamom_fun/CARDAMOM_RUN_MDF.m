@@ -48,7 +48,7 @@ end
 
 
 
-%Adding 4th option 
+%Adding 4th option
 %INPUTS
 %CARDAMOM data structure OR cardamom data file
 
@@ -57,26 +57,26 @@ end
 %output = data
 
 
-                    %make start file 
+                    %make start file
                         %make_start_file
-            
+
             %mdf command
-                       
+
                             command_cdea=sprintf('%s/projects/CARDAMOM_MDF/CARDAMOM_MDF.exe %s %s',Cpath,cbffile, cbrfile);
-                       
+
                        %run command
                        disp('C executable command');
                        disp(command_cdea);
                        disp('******************');
 if command_only==0
-    
+
     uxid=unix(command_cdea);
 
                        if uxid>0; error(sprintf('%s\n ERROR!!! the unix execution of the above command failed.',command_cdea));end
 %run results
 OPT.compile=0;
 D=CARDAMOM_RUN_MODEL(cbffile,cbrfile,OPT);
-    D.run_mode='inverse';        
+    D.run_mode='inverse';
 
 
 %delete files
@@ -84,7 +84,7 @@ if cbftemp==1;delete(cbffile);end
 if cbrtemp==1;delete(cbrfile);end
 
 
-else 
+else
     D=command_cdea;
 
 end
@@ -102,7 +102,7 @@ function [PARSALL,ANCILLARY]=read_cbr_file(filename,INFO)
 %Read CBR file
 PARSALL=[];
 
-%for wildcard option; 
+%for wildcard option;
 if isstr(filename);filename=auxifun_fullpathdir(filename);end
 
 for n=1:numel(filename)
@@ -110,7 +110,7 @@ for n=1:numel(filename)
 disp(sprintf('CHECK: .cbr file "%s" successfully read into matlab.',filename{n}));
 
 
-    %number of parameter sets 
+    %number of parameter sets
     fd=fopen(filename{n});if fd==-1;disp('WARNING: file not opened, expect error!!');end;av=fread(fd,inf,'real*8');fclose(fd);N=numel(av)/INFO.nopars;
     PARS=readbinarymat(filename{n},[N,INFO.nopars])';
 
@@ -150,7 +150,3 @@ ANCILLARY.STEP=[];
 
 
 end
-
-
-
-

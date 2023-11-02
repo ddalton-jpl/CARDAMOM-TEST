@@ -15,9 +15,9 @@ for m=1:12;TSA=TSA+TS(:,m:12:end)/12;end
 elseif dim==3
 for m=1:12;TSA=TSA+TS(:,:,m:12:end,:,:)/12;end
 
-else 
+else
     error('number of dims not supported, edit code accordingly!')
 end
-    
-    
+
+
 end

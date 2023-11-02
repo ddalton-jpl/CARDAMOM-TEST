@@ -11,7 +11,7 @@
 These functions are to be used for data assimilation projects.
 As these are generally similar these are all kept in the same folder.
 Any functions used in two or more models are kept in DALEC_ALL_LIKELIHOOD.c
-For the time being, similar functions for different models (e.g. EDC functions, MLF functions) are syncronized (as it is simpler than making a generic function at this stage). 
+For the time being, similar functions for different models (e.g. EDC functions, MLF functions) are syncronized (as it is simpler than making a generic function at this stage).
 HOWEVER: any subroutine that is called by two or more functions is kept in a common space.
 
 *****SPECIFICS************

@@ -22,10 +22,10 @@ else
     %Find subset of points corresponding to mask
     ptsall=find(PXI.MASK);
     ptsmask=find(subset==1);
-    [~,ptsss]=ismember(ptsmask,ptsall); 
-    
+    [~,ptsss]=ismember(ptsmask,ptsall);
+
 end
-    
+
 
 %Project name
 

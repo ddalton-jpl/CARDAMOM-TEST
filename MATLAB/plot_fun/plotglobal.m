@@ -20,11 +20,11 @@ yres=180/size(A,1);
 xvec=-180+xres/2:xres:180-xres/2;
 yvec=-90+yres/2:yres:90-yres/2;
 elseif length(x)<numel(x)
-    
+
     xvec=x(1,:);
-    
+
     yvec=y(:,1);
-    
+
 else
     xvec=x;
     yvec=y;
@@ -36,4 +36,3 @@ set(gca,'YDir','Normal')
 
 hold on
 plotworldmap(mapopt,[],col,lw)
-

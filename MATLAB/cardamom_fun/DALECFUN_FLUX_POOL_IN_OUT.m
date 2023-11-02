@@ -10,9 +10,9 @@ elseif ID==805;
     FLUXinout=dalec805_FLUXinout;
         elseif ID==811;
     FLUXinout=dalec805_FLUXinout;
-    
+
 end
-    
+
 
 
 
@@ -20,7 +20,7 @@ end
 
 function FLUXinout=dalec2fires_FLUXinout
 
-% DR.GPP=permute(FLUXES(1,:,:),[3,2,1]); 
+% DR.GPP=permute(FLUXES(1,:,:),[3,2,1]);
 % DR.temprate=FLUXES(2,:);
 % DR.respiration_auto=FLUXES(3,:); PIN
 % DR.leaf_production=FLUXES(4,:); PIN(4,:)=[0,1,0,0,0,0];
@@ -78,7 +78,7 @@ end
 
 function FLUXinout=dalec805_FLUXinout
 
-% DR.GPP=permute(FLUXES(1,:,:),[3,2,1]); 
+% DR.GPP=permute(FLUXES(1,:,:),[3,2,1]);
 % DR.temprate=FLUXES(2,:);
 % DR.respiration_auto=FLUXES(3,:); PIN
 % DR.leaf_production=FLUXES(4,:); PIN(4,:)=[0,1,0,0,0,0];

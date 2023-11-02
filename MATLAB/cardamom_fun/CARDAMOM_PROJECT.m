@@ -113,9 +113,9 @@ switch projname
         else
             load(savefile);
         end
-        
-        
-        
+
+
+
 
         %OBSOLETE! Change in code has lead to issues in reproducing these
         %Use AUG19
@@ -2109,7 +2109,7 @@ end
 
 
 function PXItemplate=GL05RUN_MAY21(OPT)
-%Step 1. Load drivers 
+%Step 1. Load drivers
 %See script in PROJSCRIPT_CARDAMOM_GLOBAL_TEMPLATE_MAY15
 %TESTSCRIPT_CARDAMOM_BUCKET_NOV16.m
 %Better to start with a template of RUN29 just in case
@@ -2206,7 +2206,7 @@ cbfdate=CBFtemplate.MET(:,1);
 %     %Writing LAT and 2001-2016 LAI
 %     CARDAMOM_WRITE_BINARY_FILEFORMAT(CBF,PXItemplate.cbffilename{n});
 % end
-% 
+%
 GRACE=quickload('DATASCRIPT_READ_GRACE_MASCONS_MAR19');
 
 gracedate=GRACE.time-datenum('01/01/2001');
@@ -2215,7 +2215,7 @@ gracedate=GRACE.time-datenum('01/01/2001');
 
 %Step 3. define gridcells
 %Step 4: define relevant pixel info
-%IF NEEDED, load drivers separately 
+%IF NEEDED, load drivers separately
 %EPREC=quickload('DATASCRIPT_READ_ERAI_MONTHLY_JUL18(''prec'',0.5)');
 EPREC=quickload('DATASCRIPT_READ_ERAI_MONTHLY_JUL18(''prec'',0.5)');
 ET2M=quickload('DATASCRIPT_READ_ERAI_MONTHLY_JUL18(''t2m'',0.5)');
@@ -2226,7 +2226,7 @@ HWSD=quickload('DATASCRIPT_READ_HWSD_MAP(0.5)');
 TABGB=quickload('DATASCRIPT_READ_SAATCHI_BIOMASS_MAP(0.5)');
 
  if isfield(OPT,'csif')==0;OPT.csif=0;end
- 
+
  if OPT.csif==0;
     GSIF=quickload('DATASCRIPT_READ_GOME_2_FLUORESCENCE_SEP17');
  else
@@ -2263,8 +2263,8 @@ for n=1:numel(rows);
     CBF.LAT=PXItemplate.lat(n);
     %LAI
     CBF.OBS.LAI(1:192)=nanzerofill(LAI.data(r,c,:));
-    
-    
+
+
     %Step 1. Load CBD file
     %CBF=CARDAMOM_READ_BINARY_FILEFORMAT(PXItemplate.cbffilename{n,ri});
     %Step 2. Fill in drivers
@@ -2275,7 +2275,7 @@ for n=1:numel(rows);
     CBF.MET(:,7)=BA(r,c,idx);
     CBF.MET(:,8)=VPD(r,c,idx);
     CBF.MET(:,9)=EPREC.data(r,c,idx)*1e3;%mm/day
-    
+
 
 
 
@@ -2286,19 +2286,19 @@ for n=1:numel(rows);
         %Entering SIF in CBF
         CBF.OBS.GPP(cbfyears>=min(GSIF.year) & cbfyears<=max(GSIF.year))=SIF;
         CBF.OBSUNC.GPP.gppabs=0;
-     
+
 
 
     EWT=squeeze(GRACE.data(r,c,:));
     EWT(isfinite(EWT)==0 )=-9999;
 
    if isfield(OPT,'grace')==0;OPT.grace=1;end
-       
+
 
      if OPT.grace==1;
             CBF.OBS.EWT(cbfgrpts{1})=EWT(cbfgrpts{2});
     end
-        
+
 
     %Write GFEDv4 data
     %This tends to be an issue where fires are virtually 0
@@ -2307,19 +2307,19 @@ for n=1:numel(rows);
 	 CBF.OTHER_OBS.MFire.mean=mean(GFEDCannual05x05(r,c,:),3)*12/365.25;
      CBF.OTHER_OBS.MFire.unc=1.5;
       end
-     
+
      %Write MPI GPP with log2 uncertainty here
      %remove pars(11) constraint
         CBF.OTHER_OBS.MGPP.mean=nanzerofill(mean(mean(GPP.data(r,c,:,:),3),4));
         CBF.OTHER_OBS.MGPP.unc=1.5;
 
-        
+
          CBF.OTHER_OBS.MLAI.mean=mean(CBF.OBS.LAI(CBF.OBS.LAI>-9999));
         %CBD.OTHERPRIORSUNC(5)=mean(CBD.OBS(CBD.OBS(:,2)>-9999,2))*0.2;
         %CBD.OTHERPRIORUNC(5)=CBD.OTHERPRIORS(5)*0.5;
         CBF.OTHER_OBS.MLAI.unc=1.5;
 
-    
+
     %    Biomass
     CBF.OTHER_OBS.MBiomass.mean=nanzerofill(TABGB.data(r,c));
     UNC=max(1.5,1.5*12.5*100/TABGB.data(r,c));if isinf(UNC);UNC=-9999;end
@@ -2328,7 +2328,7 @@ for n=1:numel(rows);
     CBF.PARPRIORS(23)= nanzerofill(HWSD.data(r,c));
     CBF.PARPRIORUNC(23)=1.5;
 
-    
+
     %writetofile
     disp(sprintf('writing %s',PXItemplate.cbffilename{n,ri}));
         CARDAMOM_WRITE_BINARY_FILEFORMAT(CBF,PXItemplate.cbffilename{n,ri});

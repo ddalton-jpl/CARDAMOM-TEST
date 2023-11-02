@@ -1,7 +1,7 @@
-% 
+%
 % % %Loading generic CBF file
 % % CBF=CARDAMOM_READ_BINARY_FILEFORMAT('/Users/jnorton/Models/CARDAMOM_2.1.6c/DATA/CARDAMOM_DATA_DRIVERS_EXAMPLE.cbf');
-% 
+%
 % %experiment CBF and name
 % % expname='BOREAL6';
 % % CBF=CARDAMOM_READ_BINARY_FILEFORMAT('/Users/jnorton/Models/CARDAMOM_2.1.6c/DATA/BOREAL_EXAMPLE_155E_66S.cbf');
@@ -13,26 +13,26 @@
 % CBF=CARDAMOM_READ_BINARY_FILEFORMAT('/Users/jnorton/Models/CARDAMOM_2.1.6c/DATA/DRY_TROPICS_EXAMPLE_25E_18S.cbf');
 % expname='DRYTROPICS1021XEDC';
 % CBF=CARDAMOM_READ_BINARY_FILEFORMAT('/Users/jnorton/Models/CARDAMOM_2.1.6c/DATA/DRY_TROPICS_EXAMPLE_25E_18S.cbf');
-% 
+%
 % expname='COMPLEXAUHow_A1';
 % CBF=CARDAMOM_READ_BINARY_FILEFORMAT('/Users/jnorton/Models/CARDAMOM_2.1.6c/DATA/COMPLEX_example/AU-How_exp1cEDC.cbf');
-% 
+%
 % %Changing ID
 % CBF.ID=1021;
 % CBF.EDC=1;
 % % CBF.OBS.GPP=[];
 % % CBF.OTHER_OBS.MLAI.mean=-9999;
 % % CBF.OTHER_OBS.MLAI.unc=-9999;
-% 
-% 
-% %Worth doing following any modification to the given model ID, just in case, 
+%
+%
+% %Worth doing following any modification to the given model ID, just in case,
 MD=CARDAMOM_MODEL_LIBRARY(1021,[],1);
 
 %For PARRFUN_CARDAMOM_CBF2JPLHPC.m
 OPT.username='jnorton';
 OPT.niterations=3e7;
 OPT.timefactor=5;
-% 
+%
 CBF(1) = CARDAMOM_READ_BINARY_FILEFORMAT('/Users/jnorton/Models/CARDAMOM_2.1.6c/DATA/COMPLEX_example/AU-How_exp1cEDC_AN.cbf');
 CBF(2) = CARDAMOM_READ_BINARY_FILEFORMAT('/Users/jnorton/Models/CARDAMOM_2.1.6c/DATA/COMPLEX_example/FI-Hyy_exp1cEDC_AN.cbf');
 CBF(3) = CARDAMOM_READ_BINARY_FILEFORMAT('/Users/jnorton/Models/CARDAMOM_2.1.6c/DATA/COMPLEX_example/FR-LBr_exp1cEDC_AN.cbf');
@@ -105,7 +105,7 @@ commaHeader = commaHeader(:)';
 textHeader = cell2mat(commaHeader); %cHeader in text with commas
 
 %write header to file
-fid = fopen(sprintf('/Users/jnorton/Projects/CARDAMOM/Phenology/results/%s_PARS.csv', expname),'w'); 
+fid = fopen(sprintf('/Users/jnorton/Projects/CARDAMOM/Phenology/results/%s_PARS.csv', expname),'w');
 fprintf(fid,'%s\n',textHeader)
 fclose(fid)
 %write data to end of file

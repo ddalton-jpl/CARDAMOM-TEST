@@ -97,4 +97,3 @@ plot(LAI,CBR1100.FLUXES(:,:,54),'b.-');
 legend('Soil moisture')
 xlabel('LAI [m2/m2]')
 ylabel('Soil moisture')
-

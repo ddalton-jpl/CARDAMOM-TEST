@@ -48,7 +48,7 @@ disp('UNTESTED...')
 
 
 
-%Default MCOpt 
+%Default MCOpt
 if nargin<4; MCO=[];end
 %silent code
 if isfield(MCO,'savefile')==0;MCO.savefile=[];end
@@ -84,12 +84,12 @@ if isfield(MCO,'graphical')==0;MCO.graphical=0;end
 %parameters within prescribed parameter range are chosen
 if isfield(PARS,'init')==0;disp('No initial values provided, randomly selecting starting point');PARS.init=norm2pars(PARS,rand(size(PARS.min)));end
 
-    
-%PCA rotation step 
-    
+
+%PCA rotation step
+
 
 %displaying initial parameter values
-if MCO.silent==0;    
+if MCO.silent==0;
     disp('Initial parameter values found');
    % disp(sprintf('%3d %10.5f\n ',[1:length(PARS.init);PARS.init]));
 end
@@ -112,7 +112,7 @@ Nsamples=MCO.nout/MCO.nadapt;
 Nsamplesout=floor(MCO.nout/MCO.samplerate);
 Npars=numel(pars0);
 
-%Step 
+%Step
 STEP.covariance=zeros(Npars);
 STEP.cholesky=zeros(Npars);
 
@@ -131,12 +131,12 @@ runcount=0;
 
 
 STINDEX=1;
-else 
-    
+else
+
 load(MCO.savefile);
 
     STINDEX=n+1;
-    
+
 end
 
 
@@ -148,33 +148,33 @@ for n=STINDEX:MCO.nout;
     pstep=rv1*STEP.cholesky + MCO.minstepsize*rv2;
     %pars=norm2pars(PARS,pars2norm(PARS,pars0)+pstep);
     pars=norm2pars(PARS,pars2norm(PARS,pars0)+pstep);
-    
+
     %probability is now log likelihood
     %NOTE: probability is zero if parameters are not within prior range
     P=MLF(DATA,pars)+log(double(sum(PARS.min>pars)==0))+log(double(sum(PARS.max<pars)==0));
     %P and P0 checks
-% 
+%
 %     if MCO.graphical==1
 %         %plot 2 dims only
 %         plot3(log10([pars0(1),pars(1)]),log10([pars0(2),pars(2)]),[0,0],'.--','LineWidth',0.5,'Color',ones(1,3)*0.8);
 %         drawnow;
 %     end
-    
+
    %Accept-Reject based on probability ratio and random number
    %(see Ziehn et al., 2012)
     if P-P0>log(rand(1))^MCO.MH
          %local loop constant
         local_acc=local_acc+1;
-        
+
         %pars0
         pars0=pars;
         %As of March 18, 2016: probability is no longer a standard output
         %of the MHMCMC function
-        P0=P; 
-        %Storing in PARSOUT 
+        P0=P;
+        %Storing in PARSOUT
 
     end
-    
+
     %Storing outputs
         if mod(n,MCO.samplerate)==0
         Nssamples=n/MCO.samplerate;
@@ -183,12 +183,12 @@ for n=STINDEX:MCO.nout;
     PROBout(Nssamples)=P0;
 
         end
-        
+
     if mod(n,MCO.nadapt)==0
         Nssamples=n/MCO.nadapt;
     %Accumulate parameters
     PARSALL(Nssamples,:)=pars0;
-  
+
 
     %Adjust step size, re-setting acceptance count and displaying
     %performance
@@ -200,11 +200,11 @@ for n=STINDEX:MCO.nout;
         disp(['mean step size = ',num2str(sqrt(mean(diag(STEP.covariance))))])
         if Nssamples<10*Npars;   disp(sprintf('%2.2f%% of samples aquired for covariance sampler...',Nssamples/10/Npars*100));end
     end
-        
-    
+
+
         %Adjusting step size for optimal MHMCMC performance
         inccov=1;
-        if n<MCO.nout/2  & Nssamples>10*Npars;     
+        if n<MCO.nout/2  & Nssamples>10*Npars;
             %If cov is empty
             if STEP.covariance(1,1)==0 | inccov==0
                 STEP.covariance=cov(pars2norm(PARS,PARSALL(floor(Nssamples/2)+1:Nssamples,:)));
@@ -219,19 +219,19 @@ for n=STINDEX:MCO.nout;
                 [STEP.covariance,STEP.runmean]=statfun_add_sample_to_covmat_local(STEP.covariance,STEP.covsamples,STEP.runmean,pars2norm(PARS,PARSALL(Nssamples/2,:)),-1);
                 STEP.covsamples= STEP.covsamples-1;
                 end
-                
+
             end
-            
+
             STEP.cholesky=chol(STEP.covariance*2.38^2/Npars);
         end
         %Re-setting acceptance rate count
         local_acc=0;
     end
-    
+
     if isempty(MCO.savefile)==0 & mod(n,MCO.saverate)==0;
     save(MCO.savefile);
     end
-    
+
 
     %stop loop if option to stop when log probability (P)=0 has been selected
     if (MCO.STOPBEST==1 & P==0)
@@ -301,7 +301,7 @@ fac=2;
 
 
 
-    if acc>0 & acc<round(0.23*ai) 
+    if acc>0 & acc<round(0.23*ai)
          step=step*(1/adapfac_all);
     elseif acc>(0.44*ai)
       step=step*adapfac_all;
@@ -311,14 +311,14 @@ fac=2;
     %For PCA comparison, need to either (a) rotate steps to par-space
     %OR, (b) rotate pars to step-space (correct, since this then allows
     %step to be adapted w.r.t. multivariate drift)
-    
+
     %PARS.PCArotation: reverse rotation
     if acc>3;stdacc=std( pars2norm(PARS,pars(1:end,:))*PARS.PCArotation);end
-    
+
 for n=1:length(step)
 
 
-    
+
     %Adapting step to mitigate "drift"
     if acc>3
     if step(n)>stdacc(n);
@@ -327,14 +327,14 @@ for n=1:length(step)
       step(n)=step(n)*adapfac_step;%minstepsize;
     end
     end
-    
+
         %ensuring step is not too big or small
     if step(n)>1
          step(n)=step(n)*(1/adapfac_step);
     elseif step(n)<minstepsize
       step(n)=minstepsize;%step(n)*adapfac_step;
     end
-    
+
 end
 
 step(step>1)=1;

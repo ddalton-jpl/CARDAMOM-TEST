@@ -17,6 +17,6 @@ end
     GG.x=x;
     GG.y=y;
     GG.area=111111.111^2*(resx*resy)*cos(GG.y*pi/180);
-    
-    
+
+
 end

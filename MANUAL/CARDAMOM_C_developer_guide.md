@@ -11,35 +11,35 @@
   * [Add a new dataset to CARDAMOM DATA structure](#Add-a-new-dataset-to-CARDAMOM-DATA-structure)
   * [Make a new cost function](#Make-a-new-cost-function)
   * [Switches for EDCs](#Switches-for-EDCs)
-  
-  
-  
+
+
+
   ## CARDAMOM C developer guide <a name="cardamom-c-developer-guid"/>
 
-### Intro tips. 
+### Intro tips.
 Before doing any of the following, start a new branch and used it as your developing branch to avoid potential conflicts. Constantly pull from the main branch (or any branch that your branch is based on) to keep your branch updated.\
 Regularly & frequently compile (e.g. CARDAMOM_COMPILE) when making any changes.\
 If you're comfortable with your changes and want to contribute your changes to the main branch (or any branch that you want to merge to), start a merge request and notify members of the team.
 
 
-### Make a new model. 
+### Make a new model.
 
-Making a new model ID in CARDAMOM (e.g. ID=830), based on original model (e.g. ID=811). To do this:  
+Making a new model ID in CARDAMOM (e.g. ID=830), based on original model (e.g. ID=811). To do this:
 
-1. Open C/projects/CARDAMOM_GENERAL/CARDAMOM_MODEL_LIBRARY.c and create new model identification information (e.g. ID = 830).  
+1. Open C/projects/CARDAMOM_GENERAL/CARDAMOM_MODEL_LIBRARY.c and create new model identification information (e.g. ID = 830).
 
-2. make folder in projects/CARDAMOM_MODELS/DALEC/DALEC_830 (if copied, open all files in folder and rename all instances of e.g. ”811" to “830”).  
+2. make folder in projects/CARDAMOM_MODELS/DALEC/DALEC_830 (if copied, open all files in folder and rename all instances of e.g. ”811" to “830”).
 
-Tips for step 2. 
-+ copy every instance of DALEC_811 and name them DALEC_830. 
+Tips for step 2.
++ copy every instance of DALEC_811 and name them DALEC_830.
 + Compile C code to check if it compiles.
-* (Matlab) You can use “CARDAMOM_COMPILE” in matlab, to see if the code compiles OK.  
+* (Matlab) You can use “CARDAMOM_COMPILE” in matlab, to see if the code compiles OK.
 + *if the above works without issue, then you should be able to change a CBF.ID value to CBF.ID=830 and the model will run (e.g. with CARDAMOM_RUN_MODEL) without issue!*
 + Once you’ve successfully replicated CBF.ID=811 to CBF.ID=830, you can then make model structure changes in DALEC_830.c
 + Keep using “CARDAMOM_COMPILE” every so often (in matlab, and equivalent function elsewhere) to see if your new code compiles OK.
 
 *For matlab users*
-+ Open CARDAMOM_RUN_MODEL.m and add the new model ID to the appropriate “if” statement (e.g. if CBF.ID==1000 || CBF.ID==1001;). 
++ Open CARDAMOM_RUN_MODEL.m and add the new model ID to the appropriate “if” statement (e.g. if CBF.ID==1000 || CBF.ID==1001;).
 
 (shall this be deleted? since for matlab users we are only extracting CBR.PARS, CBR.FLUXES and CBR.POOLS)
 From CARDAMOM_RUN_MODEL.m we get a CBR structure, we are only extracting CBR.PARS, CBR.FLUXES and CBR.POOLS for subsequent analysis. There's an updated, easy way to figure out output variable names, for your model ID:
@@ -52,16 +52,16 @@ MD extracts parameters, fluxes, and pools names in the same order they were defi
 
 mod.NBE = -CBR.FLUXES(:,:,MD.FLUX_IDs.gpp)+CBR.FLUXES(:,:,MD.FLUX_IDs.resp_auto)+CBR.FLUXES(:,:,MD.FLUX_IDs.rh_co2);
 
-MD.FLUX_IDs.gpp points to a numeric number that points to the exact dimension in the CBR.FLUXES, which is the modeled gpp.   
+MD.FLUX_IDs.gpp points to a numeric number that points to the exact dimension in the CBR.FLUXES, which is the modeled gpp.
 
-### Add more parameters to the model. 
+### Add more parameters to the model.
 ```json
 update this section with instructions for parameter index abstraction
 ```
 
 1. In the folder titled C/projects/CARDAMOM_MODELS/DALEC/DALEC_<newmodelid>, open MODEL_INFO_<newmodelid>.c, and change “DALECmodel.nopars” (e.g. from “33” to “35”)
 
-2. Open PARS_INFO_<newmodelid>.c and add two extra entries at the bottom of the code (with minimum and maximum values). Note: CARDAMOM only supports positive-definite values, if a -ve to +ve range is required, use “exp()” function for -ve to +ve value ranges, and use “log()” to transform these back within DALEC_<newmodelid>.c model. 
+2. Open PARS_INFO_<newmodelid>.c and add two extra entries at the bottom of the code (with minimum and maximum values). Note: CARDAMOM only supports positive-definite values, if a -ve to +ve range is required, use “exp()” function for -ve to +ve value ranges, and use “log()” to transform these back within DALEC_<newmodelid>.c model.
 
 3. *For matlab users*. Run this line in the matlab command window after making any changes to the number of parameters or pools in MODEL_INFO_<newmodelid>.c
 
@@ -83,11 +83,11 @@ MD=CARDAMOM_MODEL_LIBRARY(<newmodelid>,[],1);
 
 (where <newmodelid> is the ID for your new model). This will ensure new model parameter/pool info is registered in matlab.
 
-4. Adapt EDC2_<newmodelid>.c to either 
-    * (a) run EDC checks on new pools or 
+4. Adapt EDC2_<newmodelid>.c to either
+    * (a) run EDC checks on new pools or
     * (b) limit EDC checks to previously existing pools only (check for instances where “nopools” variable is used in loops). This is (unfortunately) a less-than-elegant approach, and we’re working on a comprehensive solution in the long run.
-    * Define prior range for parameters and why log transformed prior range is used 
-    * Avoid using zero as either the minimum or maximum parameter values, as log transformation is used for creating the new parameter values so that there is equal chance being selected within the same magnitude. Log transformation is essential for parameters spanning several magnitudes, like Soil Organic Carbon turnover rate, while doesn’t make a big difference for parameters like Q10; 
+    * Define prior range for parameters and why log transformed prior range is used
+    * Avoid using zero as either the minimum or maximum parameter values, as log transformation is used for creating the new parameter values so that there is equal chance being selected within the same magnitude. Log transformation is essential for parameters spanning several magnitudes, like Soil Organic Carbon turnover rate, while doesn’t make a big difference for parameters like Q10;
 
 #### Two examples make it easier to understand:
 + Soil organic C turnover rate (1e-7 to 1e-3 gC yr-1)
@@ -124,7 +124,7 @@ Files that are Modified:
 3. Add to CARDAMOM_WRITE_BINARY_FILEFORMAT.m
 
 4. Data is available in the data structure for use in Likelihood etc.
-    * Optional: add new cost function module (e.g. DATA_LIKELIHOOD_CH4.c) to use 
+    * Optional: add new cost function module (e.g. DATA_LIKELIHOOD_CH4.c) to use
     * To do this, add cost function module call in CARDAMOM/C/projects/DALEC_CODE/MODEL_LIKELIHOOD_FUNCTIONS/DALEC_ALL_LIKELIHOOD.c
     * If observation field can only be used by subset of models (e.g. DATA.CH4 can only be used by DATA.ID==1010), then add “IF” statement to only run “DATA_LIKELIHOOD_CH4.c” if DATA.ID==1010.
 5. Refer to section ‘Make a new cost function’ to add your new stream to cost function

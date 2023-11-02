@@ -10,13 +10,13 @@ CBROUT=CBR(1);
 CBROUT.chainid=CBR(1).PROB*0+1;
     for n=2:numel(CBR)
         for f=1:numel(fieldnames)
-        CBROUT.(fieldnames{f})=[CBROUT.(fieldnames{f});CBR(n).(fieldnames{f})];            
+        CBROUT.(fieldnames{f})=[CBROUT.(fieldnames{f});CBR(n).(fieldnames{f})];
         end
     CBROUT.chainid=[CBROUT.chainid;CBR(n).PROB*0+n];
 end
-    
 
-% 
+
+%
 % PARS=[];
 % for n=1:numel(CBR)
 % PARS=[PARS;CBR(n).PARS(end/2+1:end,:)];

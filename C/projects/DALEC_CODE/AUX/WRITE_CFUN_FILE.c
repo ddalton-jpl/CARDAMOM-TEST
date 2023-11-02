@@ -1,22 +1,18 @@
-void WRITE_CFUN_FILE(char *site,double *CFUN, int N)
+void WRITE_CFUN_FILE(char *site, double *CFUN, int N)
 
 {
 
-char filename[]="CFUN_";
-strcat(filename,site);
+  char filename[] = "CFUN_";
+  strcat(filename, site);
 
-FILE *file;
+  FILE *file;
 
-file=fopen(filename, "a+");
+  file = fopen(filename, "a+");
 
-int n;
-for (n=0;n<N;n++){
-fprintf(file,"%f \n",CFUN[n]);}
+  int n;
+  for (n = 0; n < N; n++) {
+    fprintf(file, "%f \n", CFUN[n]);
+  }
 
-
-fclose(file);
-
-
-
-
+  fclose(file);
 }

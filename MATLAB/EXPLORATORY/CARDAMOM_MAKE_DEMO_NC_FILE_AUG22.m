@@ -67,22 +67,22 @@ ncwriteatt(NC.fname,'SCF','min_threshold',0.1);
 
 
 
-%Step 5. 
+%Step 5.
     create_and_write_obs_single_variable(NC,'Mean_Biomass',-9999);
     create_and_write_obs_single_variable(NC,'Mean_Fire',-9999);
     create_and_write_obs_single_variable(NC,'Mean_GPP',-9999);
     create_and_write_obs_single_variable(NC,'Mean_LAI',-9999);%
     ncwriteatt(NC.fname,'Mean_LAI','unc',1.5);
 
-    
+
     %Put parameter constraint examples
-    
+
     % create_and_write_obs_single_variable(NC,'PEQ_Cefficiency',-9999);
     % create_and_write_obs_single_variable(NC,'PEQ_CUE',-9999);
     create_and_write_obs_single_variable(NC,'PEQ_iniSOM',9359.659);
 
 %Fusion
-nccreate(NC.fname,'MCMCID'); 
+nccreate(NC.fname,'MCMCID');
 ncwrite(NC.fname,'MCMCID',3);
 ncwriteatt(NC.fname,'MCMCID','nITERATIONS',5e5);
 ncwriteatt(NC.fname,'MCMCID','nSAMPLES',10);
@@ -126,9 +126,9 @@ function create_and_write_obs_timeseries_variable(NC,vname,vvalues)
 
 % int opt_unc_type;//(0 = absolute sigma, 1 = uncertainty factor, 2 = sigma as fraction of value)
 % int opt_normalization;//(0 = none, 1 = remove mean, 2 = divide by mean)
-% int opt_filter;//(0 = no filter, 1 = mean only, 2==annual mean & monthly anomaly, 3 = seasonal cycle & inter-annual anomalies). 
+% int opt_filter;//(0 = no filter, 1 = mean only, 2==annual mean & monthly anomaly, 3 = seasonal cycle & inter-annual anomalies).
 % double min_threshold;//Minimum value threshold: model and/or data will be rounded up to this value (default = -inf)
-% double single_monthly_unc;//Fields to be used only with Filter=2. 
+% double single_monthly_unc;//Fields to be used only with Filter=2.
 % double single_annual_unc;//Fields to be used only with Filter=2
 % double single_mean_unc;//Fields to be used only with Filter = 1;
 % double single_unc;//
@@ -186,7 +186,7 @@ end
 function ABGB=ABGB_data
 
 
-ABGB=[  
+ABGB=[
    NaN
    NaN
    NaN
@@ -379,7 +379,7 @@ ABGB=[
    NaN
    NaN
    NaN
-];   
+];
 end
 
 function CH4=CH4_data
@@ -392,7 +392,7 @@ end
 function ET= ET_data
 
 
-ET=[      
+ET=[
    NaN
    1.1328
    1.3227
@@ -678,7 +678,7 @@ GPP=[
    5.8851
    5.8107
    4.4618
-   1.8212                                                                                                                                                                                     
+   1.8212
    0.4535
    0.0044
    0.0289
@@ -798,7 +798,7 @@ function LAI=LAI_data
 
 %%%WARNING: all set to NaNs
 LAI=[
-   0.7417                                                                                                                                                                                     
+   0.7417
    0.7000
    0.5833
    0.4611
@@ -1081,7 +1081,7 @@ NBE=[
    -1.0673
    -0.7648
    -1.2895
-   -0.4161                                                                                                                                                                                    
+   -0.4161
     0.3684
     0.3858
     0.3068
@@ -1791,13 +1791,13 @@ DOY=[15.2188
   289.1562
   319.5938
   350.0312];
-  
+
 end
 
 function TOTAL_PREC=TOTAL_PREC_data
 
 TOTAL_PREC=[
-   0.5869                                                                                                                                                                                     
+   0.5869
    1.1151
    1.7490
    2.1785
@@ -1995,7 +1995,7 @@ end
 function SNOWFALL=SNOWFALL_data
 
 SNOWFALL=[
-   0.5815                                                                                                                                                                                     
+   0.5815
    1.1006
    1.5843
    1.8556
@@ -2193,7 +2193,7 @@ end
 function SSRD=SSRD_data
 
 SSRD=[
-   10.3843                                                                                                                                                                                    
+   10.3843
    14.3801
    18.6574
    24.2615
@@ -2391,7 +2391,7 @@ end
 function T2M_MIN=T2M_MIN_data
 
 T2M_MIN=[
-   -17.0821                                                                                                                                                                                   
+   -17.0821
    -13.8969
    -11.0351
    -6.6905
@@ -2589,7 +2589,7 @@ end
 function T2M_MAX=T2M_MAX_data
 
 T2M_MAX=[
-   -5.7976                                                                                                                                                                                    
+   -5.7976
    -3.9007
    -1.4394
    3.0841
@@ -2986,7 +2986,7 @@ end
 function VPD=VPD_data
 
 VPD=[
-   1.8953                                                                                                                                                                                     
+   1.8953
    2.1940
    2.5236
    4.1060
@@ -3186,7 +3186,7 @@ end
 function SCF=SCF_data
 
 SCF=[
-   0.2722                                                                                                                                                                                     
+   0.2722
    0.3200
    0.3861
    0.4978
@@ -3383,7 +3383,7 @@ end
 
 function FLUXNET_G=FLUXNET_G_data
 
-FLUXNET_G=[ 
+FLUXNET_G=[
 -0.205366752
 -0.129752928
 -0.051291446
@@ -3582,7 +3582,7 @@ NaN];
 end
 function FLUXNET_LE=FLUXNET_LE_data
 
-FLUXNET_LE=[ 
+FLUXNET_LE=[
 1.27450368
 2.83255488
 3.307176
@@ -3780,7 +3780,7 @@ NaN];
 
 end
 function FLUXNET_SW_IN=FLUXNET_SW_IN_data
-FLUXNET_SW_IN=[ 
+FLUXNET_SW_IN=[
 9.2867904
 12.6929376
 14.1783264
@@ -3979,7 +3979,7 @@ NaN];
 end
 function FLUXNET_SW_OUT=FLUXNET_SW_OUT_data
 
-FLUXNET_SW_OUT=[ 
+FLUXNET_SW_OUT=[
 1.563545745
 1.88216515
 NaN
@@ -4178,7 +4178,7 @@ NaN];
 end
 function FLUXNET_LW_OUT=FLUXNET_LW_OUT_data
 
-FLUXNET_LW_OUT=[ 
+FLUXNET_LW_OUT=[
 24.75579112
 25.05634018
 NaN

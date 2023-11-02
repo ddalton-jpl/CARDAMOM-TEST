@@ -8,9 +8,9 @@ k0 - saturated hydraulic conductivity (m/s)
 b - retention parameter
 */
 
-double HYDROFUN_MOI2CON(double moi, double k0, double b){
+double HYDROFUN_MOI2CON(double moi, double k0, double b) {
 
-double con=k0*pow(moi,2*b+3);
- 
-return con;
+  double con = k0 * pow(moi, 2 * b + 3);
+
+  return con;
 }

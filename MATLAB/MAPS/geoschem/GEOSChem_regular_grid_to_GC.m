@@ -3,8 +3,8 @@ function FOUT=GEOSChem_regular_grid_to_GC(FIN,gcres)
 %INPUTS:
 %FIN: 1x1 degree dataset (180 x 360 x N).
 %gcres: either '2x2.5' or '4x5'
-%Supports 
-%Includes calls to 
+%Supports
+%Includes calls to
 %loadworldmesh
 %GEOSChem_xygrids
 %2x2.5 is now obsolete
@@ -37,7 +37,7 @@ FOUT=repmat(Ag,[1,1,size(FIN,3),size(FIN,4)]);
 
 res=180/size(FIN,1);
 [x,y,A]=loadworldmesh(res);
-     
+
 for nn=1:size(FIN,4);
     for n=1:size(FIN,3);
              fch4=FIN(:,:,n,nn);
@@ -46,27 +46,27 @@ if res==1;
     %move left-edge from 180W to 179.5E (1/2 rotation eastwards).
     fch4=fch4/2+fch4(:,[end,1:end-1])/2;
     %now rotate by two eastwards to place left-edge at 177.5
-    fch4=fch4(:,[end-1:end,1:end-2]);   
+    fch4=fch4(:,[end-1:end,1:end-2]);
 %end
 
 elseif res==0.5
         %now rotate by five eastwards to move from 180W left-edge at 177.5E
-    fch4=fch4(:,[end-4:end,1:end-5]);   
+    fch4=fch4(:,[end-4:end,1:end-5]);
 elseif res==0.25
         %now rotate by ten eastwards to move from 180W left-edge at 177.5E
-    fch4=fch4(:,[end-9:end,1:end-10]);   
+    fch4=fch4(:,[end-9:end,1:end-10]);
 elseif res==0.1
             %now rotate by twenty five eastwards to move from 180W left-edge at 177.5E
-    fch4=fch4(:,[end-24:end,1:end-25]);   
+    fch4=fch4(:,[end-24:end,1:end-25]);
 end
 
 %griding at GC 4x5 resolution
     fch4_gc=GC.x*0;
     count=GC.x*0;
-    
+
     nc=5/res;
     nr=4/res;
-for c=1:nc; 
+for c=1:nc;
     for r=1:nr;
         %ignore first two rows (belong to -90) and last two rows (belong to
         %+90)
@@ -77,7 +77,7 @@ end
 
         %Normalizing by "count"
         fch4_gc(2:end-1,:)=fch4_gc(2:end-1,:)./count(2:end-1,:);
-        
+
         %scale factor (should be close to 1)
         %Only apply if non nans for conservation of quantity
         %Also: only apply to positive-definite values
@@ -112,7 +112,7 @@ FOUT=repmat(Ag,[1,1,size(FIN,3),size(FIN,4)]);
 
 res=180/size(FIN,1);
 [x,y,A]=loadworldmesh(res);
-     
+
 for nn=1:size(FIN,4);
     for n=1:size(FIN,3);
              fch4=FIN(:,:,n,nn);
@@ -121,22 +121,22 @@ if res==0.5
     %move left-edge from 180W to 179.75E (1/2 rotation eastwards).
     fch4=fch4/2+fch4(:,[end,1:end-1])/2;
     %now rotate by two eastwards to place left-edge at 178.7500E
-    fch4=fch4(:,[end-1:end,1:end-2]);   
+    fch4=fch4(:,[end-1:end,1:end-2]);
     %end
 elseif res==0.25
-    %rotate by five eastwards to move from 180W left-edge at 178.7500E        
-    fch4=fch4(:,[end-4:end,1:end-5]);   
+    %rotate by five eastwards to move from 180W left-edge at 178.7500E
+    fch4=fch4(:,[end-4:end,1:end-5]);
 end
 
 %griding at GC 2.25 resolution
     fch4_gc=GC.x*0;
     count=GC.x*0;
-    
-    
+
+
     %CONTINUE FROM HERE**********
     nc=2.5/res;
     nr=2/res;
-for c=1:nc; 
+for c=1:nc;
     for r=1:nr;
         %ignore first two rows (belong to -90) and last two rows (belong to
         %+90)
@@ -147,7 +147,7 @@ end
 
         %Normalizing by "count"
         fch4_gc(2:end-1,:)=fch4_gc(2:end-1,:)./count(2:end-1,:);
-        
+
         %scale factor (should be close to 1)
         %Only apply if non nans for conservation of quantity
         if sf==1

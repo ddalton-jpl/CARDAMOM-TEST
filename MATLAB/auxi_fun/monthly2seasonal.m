@@ -13,11 +13,11 @@ defval('meanmedian',1);
 
 
 switch ndims(TS)
-    
+
     case 2
 
 if meanmedian==1
-       
+
 if nm==0;
 for m=1:12;TSA(:,m)=mean(TS(:,m:12:end),2);end
 else
@@ -25,7 +25,7 @@ else
 end
 
 elseif meanmedian==2
-    
+
     if nm==0;
 for m=1:12;TSA(:,m)=median(TS(:,m:12:end),2);end
 else
@@ -37,7 +37,7 @@ end
     case 3
 
 if meanmedian==1
-       
+
 if nm==0;
 for m=1:12;TSA(:,:,m)=mean(TS(:,:,m:12:end),3);end
 else
@@ -45,7 +45,7 @@ else
 end
 
 elseif meanmedian==2
-    
+
     if nm==0;
 for m=1:12;TSA(:,:,m)=median(TS(:,:,m:12:end),3);end
 else

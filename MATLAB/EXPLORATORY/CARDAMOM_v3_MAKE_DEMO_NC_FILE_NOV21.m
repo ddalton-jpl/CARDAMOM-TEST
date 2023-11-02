@@ -43,22 +43,22 @@ ncwriteatt(NC.fname,'SCF','opt_unc_type',2);
 
 
 
-%Step 5. 
+%Step 5.
     create_and_write_obs_single_variable(NC,'Mean_Biomass',-9999);
     create_and_write_obs_single_variable(NC,'Mean_Fire',-9999);
     create_and_write_obs_single_variable(NC,'Mean_GPP',-9999);
     create_and_write_obs_single_variable(NC,'Mean_LAI',3);%
     ncwriteatt(NC.fname,'Mean_LAI','unc',1.5);
 
-    
+
     %Put parameter constraint examples
-    
+
     create_and_write_obs_single_variable(NC,'PEQ_Cefficiency',-9999);
     create_and_write_obs_single_variable(NC,'PEQ_CUE',-9999);
     create_and_write_obs_single_variable(NC,'PEQ_iniSOM',-9999);
 
 %Fusion
-nccreate(NC.fname,'MCMCID'); 
+nccreate(NC.fname,'MCMCID');
 ncwrite(NC.fname,'MCMCID',3);
 ncwriteatt(NC.fname,'MCMCID','nITERATIONS',5e5);
 ncwriteatt(NC.fname,'MCMCID','nSAMPLES',10);
@@ -102,9 +102,9 @@ function create_and_write_obs_timeseries_variable(NC,vname,vvalues)
 
 % int opt_unc_type;//(0 = absolute sigma, 1 = uncertainty factor, 2 = sigma as fraction of value)
 % int opt_normalization;//(0 = none, 1 = remove mean, 2 = divide by mean)
-% int opt_filter;//(0 = no filter, 1 = mean only, 2==annual mean & monthly anomaly, 3 = seasonal cycle & inter-annual anomalies). 
+% int opt_filter;//(0 = no filter, 1 = mean only, 2==annual mean & monthly anomaly, 3 = seasonal cycle & inter-annual anomalies).
 % double min_threshold;//Minimum value threshold: model and/or data will be rounded up to this value (default = -inf)
-% double single_monthly_unc;//Fields to be used only with Filter=2. 
+% double single_monthly_unc;//Fields to be used only with Filter=2.
 % double single_annual_unc;//Fields to be used only with Filter=2
 % double single_mean_unc;//Fields to be used only with Filter = 1;
 % double single_unc;//
@@ -162,7 +162,7 @@ end
 function ABGB=ABGB_data
 
 
-ABGB=[  
+ABGB=[
        NaN
        NaN
        NaN
@@ -355,7 +355,7 @@ ABGB=[
        NaN
        NaN
        NaN];
-   
+
 end
 
 function CH4=CH4_data
@@ -1767,7 +1767,7 @@ DOY=[15.2188
   289.1562
   319.5938
   350.0312];
-  
+
 end
 
 function PREC=TOTAL_PREC_data
@@ -3358,7 +3358,7 @@ end
 
 function FLUXNET_G=FLUXNET_G_data
 
-FLUXNET_G=[ 
+FLUXNET_G=[
 -0.205366752
 -0.129752928
 -0.051291446
@@ -3557,7 +3557,7 @@ NaN];
 end
 function FLUXNET_LE=FLUXNET_LE_data
 
-FLUXNET_LE=[ 
+FLUXNET_LE=[
 1.27450368
 2.83255488
 3.307176
@@ -3755,7 +3755,7 @@ NaN];
 
 end
 function FLUXNET_SW_IN=FLUXNET_SW_IN_data
-FLUXNET_SW_IN=[ 
+FLUXNET_SW_IN=[
 9.2867904
 12.6929376
 14.1783264
@@ -3954,7 +3954,7 @@ NaN];
 end
 function FLUXNET_SW_OUT=FLUXNET_SW_OUT_data
 
-FLUXNET_SW_OUT=[ 
+FLUXNET_SW_OUT=[
 1.563545745
 1.88216515
 NaN
@@ -4153,7 +4153,7 @@ NaN];
 end
 function FLUXNET_LW_OUT=FLUXNET_LW_OUT_data
 
-FLUXNET_LW_OUT=[ 
+FLUXNET_LW_OUT=[
 24.75579112
 25.05634018
 NaN

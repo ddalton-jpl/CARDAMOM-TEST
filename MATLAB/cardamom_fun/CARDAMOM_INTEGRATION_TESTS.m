@@ -4,20 +4,20 @@
 %known outcomes
 %cbffilename_old='CARDAMOM/DATA/MODEL_ID_1000_EXAMPLE.cbf';
 % %delete(cbffilename);TEST_CARDAMOM_CBF_NETCDF_FORMAT(cbffilename_old,cbffilename);
-% 
+%
 % nccbffilename1000='CARDAMOM/DATA/MODEL_ID_1000_EXAMPLE.cbf.nc';
-% 
-% 
+%
+%
 % CBF1000=CARDAMOM_READ_NC_CBF_FILE(nccbffilename1000);
 %  CBF1100=CBF1000(1);
 %  CBF1100.ID.values=1100;
-%  
+%
 %  nccbffilename1100='CARDAMOM/DATA/MODEL_ID_1100_EXAMPLE.cbf.nc';
-% 
+%
 %  CARDAMOM_WRITE_NC_CBF_FILE(CBF1100,nccbffilename1100);
 
 %  cbrfilename1100='CARDAMOM/DATA/MODEL_ID_1100_EXAMPLE.cbr';
-% 
+%
 % CBR1100=CARDAMOM_RUN_MDF(nccbffilename1100,[],cbrfilename1100);
 %CBR1100=CARDAMOM_RUN_MDF(nccbffilename1100,[],cbrfilename1100);
 
@@ -25,10 +25,10 @@
 %This benchmark is obsolete, only applied to ID=1000
 % %CBR_old=CARDAMOM_RUN_MODEL(cbffilename_old,cbrfilename);
 % CBR=CARDAMOM_RUN_MODEL(nccbffilename1100,cbrfilename1100);
-% 
+%
 % %Compare CBR against benchmarks
 % load('CARDAMOM/DATA/CBR_PRE_NCDF_BENCHMARKS','CBRcbf','CBRnccbf')
-% 
+%
 % disp('Numerical differences: expected to be ~0')
 % disp(minmax(CBRnccbf.FLUXES-CBR.FLUXES))
 % disp(minmax(CBRcbf.FLUXES-CBR.FLUXES))
@@ -41,7 +41,7 @@
 disp('DEMO files are created using CARDAMOM_v3_MAKE_EXAMPLE_NC_FILE_SEP21.m')
 
 
-%%%%%*********Test 1 ************ 
+%%%%%*********Test 1 ************
 nccbffilename1100='CARDAMOM/DATA/CARDAMOM_DEMO_DRIVERS_prototype.cbf.nc';
 CBF=CARDAMOM_READ_NC_CBF_FILE(nccbffilename1100);
 disp('Successfully read file using "CARDAMOM_READ_NC_CBF_FILE" ...')
@@ -66,9 +66,9 @@ disp('valgrind ./CARDAMOM/C/projects/CARDAMOM_MDF/CARDAMOM_MDF_debug.exe CARDAMO
 
 
 
-        
-        
-        %%%%%*********Test 2 ************ 
+
+
+        %%%%%*********Test 2 ************
 nccbffilename1100='CARDAMOM/DATA/CARDAMOM_DEMO_DRIVERS_prototype.cbf.nc';
 CBF=CARDAMOM_READ_NC_CBF_FILE(nccbffilename1100);
 disp('Successfully read file using "CARDAMOM_READ_NC_CBF_FILE" ...')
@@ -82,16 +82,16 @@ CBF.ID.values=1005;
 % CBF.MCMCID.values=3;
 
         CBR=CARDAMOM_RUN_MDF(CBF);
-        
+
         %save CBRtest2 CBR
-        
-        
+
+
         load CBRtest2 CBR
         %Rerun
         %CBR2=CARDAMOM_RUN_MODEL(CBF,CBR.PARS);
-        
+
         cardamom_vvuq_nccbf_summary(CBF)
-        
+
         plot(CBR.GPP); hold on; plot(CBF.GPP.values)
         plot(CBR.NBE); hold on; plot(CBF.NBE.values)
         plot(CBR.LAI); hold on; plot(CBF.LAI.values)
@@ -100,8 +100,8 @@ CBF.ID.values=1005;
 
 
 
-        
-        
+
+
 
 
 %*********Try writing out
@@ -127,7 +127,7 @@ CBF.Mean_LAI.opt_unc_type=1;
 %first test is retrieving parameters. Skip only for partial testing
 retrievepars=1;
 if retrievepars==1
-    
+
 %     MCO.niterations=1;
 %     MCO.samplerate=1;
      cbrfilename1100='DUMPFILES/MODEL_ID_1100_EXAMPLE.cbr.nc';
@@ -155,8 +155,8 @@ CBF1005=CBF;
 CBF1005.ID.values=1005;
 CBF1005.MCMCID.nITERATIONS=1e6;
 CBR1005=CARDAMOM_RUN_MDF(CBF1005);
-        
-        
+
+
 
 
 
@@ -197,7 +197,7 @@ CBF.EDC.values=0;
 CARDAMOM_WRITE_NC_CBF_FILE(CBF,nccbftestfile);
 %CARDAMOM_RUN_MDF(nccbftestfile)
 CBF1100test=CARDAMOM_READ_NC_CBF_FILE(nccbftestfile);
- 
+
 
 
 
@@ -258,8 +258,8 @@ end
  CBR=CARDAMOM_RUN_MODEL(nccbftestfile,cbrfilename1100);
 load(cbrfilename1100refmat, 'CBRref');
 
-% 
-% %Compare CBR against benchmarks 
+%
+% %Compare CBR against benchmarks
  disp('Numerical differences: expected to be ~0')
  disp(minmax(CBR.FLUXES-CBRref.FLUXES))
  disp(minmax(CBR.POOLS-CBRref.POOLS))
@@ -267,7 +267,7 @@ load(cbrfilename1100refmat, 'CBRref');
  disp(minmax(CBR.PROB-CBRref.PROB))
 
 
- 
+
 
 disp('**********')
 disp('**********')
@@ -390,7 +390,7 @@ CBFall.OBS.LAI(2:CBFall.nodays,1)=sum(CBRcf.POOLS(1,1:end-1,2)/2+CBRcf.POOLS(1,2
  CBFall.OBS.NBE(1)=CBRcf.NBE(1);
  CBFall.OBS.GPP=CBRcf.GPP(1,:)';
 
- 
+
 CBRall=CARDAMOM_RUN_MODEL(CBFall,cfpars);
 CBRall.PROB
 
@@ -455,6 +455,3 @@ ALL_TESTS(k,:)=[ -0.5, CBRcf.PROB];TEST_NAMES{k}='GPP, 1 obs, 1-delta offset';k=
 
 
 end
-
-
-

@@ -6,7 +6,7 @@ function CARFIELDS=CARDAMOM_PROJECT_OUTPUTS_beta(PXI,FIELDS,OPT)
 %
 %Required
 %FIELDS(n).name='GPP_monthly'
-%FIELDS(n).func=@(CBR,cbffile) mean(CBR.GPP,2); 
+%FIELDS(n).func=@(CBR,cbffile) mean(CBR.GPP,2);
 %
 %
 %Optional
@@ -19,12 +19,12 @@ function CARFIELDS=CARDAMOM_PROJECT_OUTPUTS_beta(PXI,FIELDS,OPT)
 defval('OPT',[])
 
 if isempty(OPT) | isfield(OPT,'STORE')==0; OPT.STORE=1;end
-    
+
 if isfield(OPT,'matfile')==0;OPT.matfile=1;end
 
 
 defval('writetofile',0);
-for f=1:numel(FIELDS) 
+for f=1:numel(FIELDS)
     %Defaults
     if  isstruct(FIELDS) & (isfield(FIELDS,'stats')==0 | isempty(FIELDS(f).stats))
         FIELDS(f).stats(1).func=@(M) percentile(M,5);
@@ -34,7 +34,7 @@ for f=1:numel(FIELDS)
         FIELDS(f).stats(5).func=@(M) percentile(M,95);
         FIELDS(f).stats(6).func=@(M) mean(M);
         FIELDS(f).stats(7).func=@(M) std(M);
-        
+
         FIELDS(f).stats(1).name='perc05';
         FIELDS(f).stats(2).name='perc25';
         FIELDS(f).stats(3).name='perc50';
@@ -43,7 +43,7 @@ for f=1:numel(FIELDS)
         FIELDS(f).stats(6).name='mean';
         FIELDS(f).stats(7).name='stdev';
     end
-    
+
 end
 %
 %
@@ -71,28 +71,28 @@ crmopt.MODEL.MA=CARDAMOM_MODEL_LIBRARY(PXI.ID);
 crmopt.STORE=OPT.STORE;%flag to store outputs
 crmopt.compile=0;
 
-    %Step 1. Check if files exist or need overwriting 
+    %Step 1. Check if files exist or need overwriting
     ow=0;
 for f=1:numel(FIELDS);
 
-    
+
     filenames{f}=[output_path,'/',FIELDS(f).name,'.mat'];
-    
-        
+
+
     if isfield(FIELDS,'overwrite') & FIELDS(f).overwrite==1;fstatus(f)=0 ;
-        
+
         if isfile(filenames{f})==1;ow=1;disp(sprintf('About to overwrite %s...',filenames{f}));pause(1);end
-        
+
         ;else;    fstatus(f)=isfile(filenames{f});end
-    
+
     if OPT.matfile==1;
          F{f}=matfile(filenames{f},'Writable',true);
     elseif OPT.matfile==0 & fstatus(f)==1
         load(filenames{f})
-        
+
     end
 
-   
+
 end
 
 
@@ -105,11 +105,11 @@ if ow==1;disp('About to overwrite existing file. Type "dbcont" to continue, or "
     % if writetofile==1
    %  end
     %Step 2.1 loop through all pixels & populate array(s)
-    
-    
+
+
 if total(fstatus==0)>0;
-    
-    
+
+
 for p=px;%1:numel(PXI.lon);
             %Step 2.1.1 load CBF CBR files
             cbffile=PXI.cbffilename{p};
@@ -118,14 +118,14 @@ for p=px;%1:numel(PXI.lon);
             if isempty(cbrfiles)==0;
             [CBR]=CARDAMOM_RUN_MODEL(cbffile,cbrfiles,crmopt);
             end
-            
+
             for f=find(fstatus==0);
 
             %Step 2.1.2: extract field
             carout=FIELDS(f).func(CBR,cbffile);
 
-            
-            
+
+
             %Step 2.1.3: populate map
             for s=1:numel(FIELDS(f).stats)
                 %stats
@@ -134,22 +134,22 @@ for p=px;%1:numel(PXI.lon);
 
                 carout_stats=FIELDS(f).stats(s).func(carout);
 
-                
+
                 %Declare statistic for writing to file size if p==px(1)
                 sname=FIELDS(f).stats(s).name;
                 if p==px(1);
-                    %E.g F.mean 
+                    %E.g F.mean
                     if ndims(carout_stats)==2 & min(size(carout_stats))==1
                     F{f}.(sname)=zeros(size(PXI.pixelidmap,1),size(PXI.pixelidmap,2),numel(carout_stats));
                     elseif ndims(carout_stats)>=2 & min(size(carout_stats))>1
                     F{f}.(sname)=zeros([size(PXI.pixelidmap,1),size(PXI.pixelidmap,2),size(carout_stats)]);
                     end
                 end
-                
-                
+
+
                 %fill map with stats
                 switch ndims(F{f}.(sname))
-                    
+
                     case 3
                                             F{f}.(sname)(PXI.r(p),PXI.c(p),1:numel(carout_stats))=permute(carout_stats,[1,3,2]);
 
@@ -162,17 +162,17 @@ for p=px;%1:numel(PXI.lon);
                    case 6
                         F{f}.(sname)(PXI.r(p),PXI.c(p),1:size(carout_stats,1),1:size(carout_stats,2),1:size(carout_stats,3),1:size(carout_stats,4))=permute(carout_stats,[5,6,1,2,3,4]);
                 end
-                
-                    
-                    
+
+
+
             end
-                
 
-            
-            
 
-    
-            
+
+
+
+
+
 
     if OPT.matfile==0 & (mod(p,30)==5 | p==px(end))
         disp(['Saving here ... ',filenames{f}])
@@ -180,12 +180,12 @@ for p=px;%1:numel(PXI.lon);
         save(filenames{f},'Fstruct','-v7.3')
         disp('..Done...')
     end
-    
+
             end
-            
+
 end
 
-%     
+%
 % if writetofile==0;
 %     FF=matfile(filenames{f},'Writable',true);
 %     FF=F;
@@ -193,7 +193,7 @@ end
 
 
 end
-    
+
 %Step 3. Read all files
 for f=1:numel(FIELDS)
     if OPT.matfile==1
@@ -211,5 +211,3 @@ end
 
 
 end
-    
-

@@ -17,18 +17,18 @@ for yr=1:N;idx=[1:12]+(yr-1)*12;
 TSA(idx)=cumsum(TS(:,idx));end
 
 elseif dim==3
-    
-    
+
+
 N=size(TS,3)/12;
 
 for yr=1:N;
     idx=[1:12]+(yr-1)*12;
     TSA(idx)=cumsum(TS(:,:,idx,:,:));end
-    
 
-else 
+
+else
     error('number of dims not supported, edit code accordingly!')
 end
-    
-    
+
+
 end

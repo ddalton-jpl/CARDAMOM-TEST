@@ -6,11 +6,11 @@ function TESTSCRIPT_TWO_POOL_WATER_ENERGY_MODEL_OCT20
 %
 %Major changes
 %Will resolve monthly (with corresponding depths)
-%Will 
+%Will
 
 %***NEXT STEPS***
 %Bring in rivershed datasets
-%Evaporation term 
+%Evaporation term
 
 
 %Step 2. Define full data structure here
@@ -20,7 +20,7 @@ DATA=DATA_STRUCTURE;
 [PARS_OPT, PARS_FIXED]=PARS_STRUCTURE;
 
 DATA.PARS_OPT=PARS_OPT; %Contains all info for optimizable parameters
-DATA.PARS_FIXED=PARS_FIXED;%Contains all fixed parameters 
+DATA.PARS_FIXED=PARS_FIXED;%Contains all fixed parameters
 
 
 %Step 4. Define all soil H2O model functions here
@@ -31,7 +31,7 @@ DATA.FUNC=FUNCTION_STRUCTURE;
 test_mcmc_setup(DATA)
 
 keyboard
-%Run model 
+%Run model
 
 
 end
@@ -40,9 +40,9 @@ end
 function test_mcmc_setup(DATA)
 
 %MCMCPARS, MC
-MCMC_PARS.init=struct2mat(DATA.PARS_OPT,'init')';                        
-MCMC_PARS.min=struct2mat(DATA.PARS_OPT,'min')';                        
-MCMC_PARS.max=struct2mat(DATA.PARS_OPT,'max')';     
+MCMC_PARS.init=struct2mat(DATA.PARS_OPT,'init')';
+MCMC_PARS.min=struct2mat(DATA.PARS_OPT,'min')';
+MCMC_PARS.max=struct2mat(DATA.PARS_OPT,'max')';
 MCMC_PARS.step=0.0001;
 
 MCMC_OPTIONS.nout=100000;
@@ -55,7 +55,7 @@ MCMC_OPTIONS.mcmcid=119;
 %o
 MCMC_LIKELIHOOD_FUNC = @(DATA,pars) MLFlocal(DATA,pars);
 
-%Parameter names: not necessary 
+%Parameter names: not necessary
 parameter_names=struct2mat(DATA.PARS_OPT,'name')';     %Not necessary for MCMC to run
 
 %
@@ -117,7 +117,7 @@ subplot(3,3,8);plotmultilines(MOI(:,:,2));title('SM PUW');ylabel('m3/m3');
 %map mcmc parameters onto "PARS" structure
 
 keyboard
-% 
+%
 
 
 
@@ -128,7 +128,7 @@ end
 function [P,STATES]=MLFlocal(DATA,pars)
 
 
-%project on structure 
+%project on structure
 %CONTINUE FROM HERE: look at struct2mat
 %PARS=mat2struct(pars,DATA.MCMCPARStest);
 
@@ -138,7 +138,7 @@ STATES=soil_water_model(DATA,pars);
 %Likelihood function
 %EWT units are in mm
 %Uncertainty = 50mm
-unc0=50;%units mm, %E.g. GRACE vector timeseries 
+unc0=50;%units mm, %E.g. GRACE vector timeseries
 % log L(x|O) ~ (M - O)^2/sigma^2
 %
 unc =unc0;
@@ -167,7 +167,7 @@ FUNC.psi2moi=@(psi,psiporosity,b) ((psi./psiporosity).^(-1/b));%m3/m3 to MPa
 %m3/m3 to m/s
 FUNC.moi2con=@(sm,k0,b)  k0*(sm).^(2*b+3);
 
-%density * conductivity 
+%density * conductivity
 % smflux=@(PSI, ) -1e3
 
 %Convert mm to soil moisture
@@ -230,7 +230,7 @@ function [PARS_OPT, PARS_FIXED]=PARS_STRUCTURE;
 %parameters
 %still need to use "id" to project to model parameters
 
-%Loading functions 
+%Loading functions
 FUNC=FUNCTION_STRUCTURE;
 
 
@@ -315,7 +315,7 @@ for f=1:numel(fn);
                 S.id=k+1:k+numel(S.(fn{f}));
                                 k=k+numel(S.(fn{f}));
             end
-        
+
         end
 
 end
@@ -325,7 +325,7 @@ end
 
 
 
-%Convention: 
+%Convention:
 %   - anything "known" is in DATA
 %   - anything "unknown" and/or optimizable is in PARS
 function STATES=soil_water_model(DATA,pars);
@@ -348,7 +348,7 @@ PARS.psifield=pars(DATA.PARS_OPT.psifield.id);
 PARS.psi_b=pars(DATA.PARS_OPT.psi_b.id);
 PARS.k0=pars(DATA.PARS_OPT.k0.id);
 PARS.Imax=pars(DATA.PARS_OPT.Imax.id);
-%STATES: cotains 
+%STATES: cotains
 PARS.SM0=pars(DATA.PARS_OPT.SM0.id);
 
 
@@ -370,13 +370,13 @@ PARS.SM0=pars(DATA.PARS_OPT.SM0.id);
 
 %STep 2.5 layer-to-layer transfer
 
-%STATES: cotains 
+%STATES: cotains
 STATES.SM=PARS.SM0;
 
 
 %Step 3. Initial conditions
 %SM  (in m3/m3 of pore space)
-%SM(:,1) = top layer 
+%SM(:,1) = top layer
 %SM(:,2) = h
 
 
@@ -384,34 +384,34 @@ STATES.SM=PARS.SM0;
 %
 
 for t=1:24
-    
+
     %Infiltration
    [I,S]= infiltration(DATA,PARS,STATES,t);
     STATES.INFR(t,1)=I;
     STATES.SRUN(t,1)=S;
-    
-    
+
+
     %evapotranspiration
     STATES.ET(t,:)=evapotranspiration(DATA, PARS,STATES,t);
-    
+
     %Put precip in top layer
     %SM = soil moisture (m3/m3)
     STATES.SM(t+1,:)=STATES.SM(t,:);
-    %Adding 
+    %Adding
     STATES.SM(t+1,1)=STATES.SM(t,1)+FUNC.ewt2moi(STATES.INFR(t),PARS.layer_thickness(1),PARS.porosity(1));
 
-    
-    
+
+
      STATES.PSI(t,:)=FUNC.moi2psi(STATES.SM(t+1,:),PARS.psiporosity,PARS.psi_b);
 
-        %***drainage***        
+        %***drainage***
 
     STATES.DR(t,:)=drainage(DATA,PARS,STATES,t);
 
     STATES.SM(t+1,:)= STATES.SM(t+1,:)-STATES.DR(t,:);
-    
-    
-   
+
+
+
        %Conductivity
        %Decreases fast, ok to cap bottom values
     STATES.K(t,:)=FUNC.moi2con(STATES.SM(t+1,:),PARS.k0,PARS.psi_b);
@@ -422,18 +422,18 @@ for t=1:24
     %Positiv e = Bottom to top
     %Tp tyest , try PSI(1) = PSI(2)
     F= -1e3*sqrt(prod(STATES.K(t,:)))*( FUNC.psi2metric(STATES.PSI(t,1)-STATES.PSI(t,2))/mean(PARS.layer_thickness)  +1);
-    
-  
+
+
     %m/s to mm/month COnvert to monthly
     %Also convert from metres to moisture?
     Fm=F*3600*24*365.25/12;
-    %CHECK UNITS, 
+    %CHECK UNITS,
      STATES.ALLFm(t,:)=[Fm,-Fm]*1000;
     %Soil moisture flux
     %timestep question?
 
-    
-    
+
+
     %ET = ETmax *
     ti=mod(t-1,12)+1;
     %Cal
@@ -446,19 +446,19 @@ for t=1:24
     for n=1:2
         STATES.SM(t+1,n)=STATES.SM(t+1,n)+FUNC.ewt2moi( - STATES.ET(t,n)+STATES.ALLFm(t,n),PARS.layer_thickness(n),PARS.porosity(n));
     end
-    
+
     %
 
-    
+
 end
 
-    
+
     %*****OUTPUTS******
     STATES.UNITS.SM='m3/m3';
     STATES.UNITS.INFR='mm/month';
- 
-    
-    %Derive EWT 
+
+
+    %Derive EWT
     for t=1:size(STATES.SM,1)
         for l=1:2
             STATES.EWT(t,l)=FUNC.moi2ewt(STATES.SM(t,l),PARS.layer_thickness(l),PARS.porosity(l));
@@ -467,28 +467,28 @@ end
             end
         end
     end
-    
 
-    
-    
+
+
+
 end
 
 %This function will be called at each iteration (at end of water state
 %updates)
-%- Numerical sequence = 
+%- Numerical sequence =
 %       (1) Derive water fluxes based on water states@t-1
 %       (2) Derive energy fluxes as function of water fluxes + other
 %       fluxes@t + existing energy states @t-1
 %Note: if soil freezes, shows up at next timestep.
 function STATES=soil_energy_model(DATA,STATES,pars)
 
-%Note: 
+%Note:
 
 
 \
 
 
-%Step 2. 
+%Step 2.
 
 
 %Last step. Update energy ODEs (PDEs)
@@ -507,15 +507,15 @@ function D= drainage(DATA,PARS,STATES,t);
         %Excess moisture above field capacity
     SMdelta = max(STATES.SM(t+1,:) - DATA.FUNC.psi2moi(PARS.psifield,PARS.psiporosity,PARS.psi_b),0);
     %Drainage calculated as (1 - (Psi_porisity - Psi(t))./(Psi_porisity - Psi_field))) * SMexcess/2
-    
+
     D=(1- (PARS.psiporosity-min(max(STATES.PSI(t,:),PARS.psifield),PARS.psiporosity))./(PARS.psiporosity-PARS.psifield)).*(SMdelta)/2;
 
-    
-    
+
+
 end
 
 
-%Modules 
+%Modules
 function [I,S]=infiltration(DATA,PARS,STATES,t);
 
 %Unpacking required drivers and parameters

@@ -69,7 +69,7 @@ end
 
 
 %Add ET
-% 
+%
 % OBS_STRUCT OBS;
 % OBS.unc = ncdf_read_double_var(ncid, strcat(OBSNAME,"unc") , &(OBS.length));
 % OBS.values = ncdf_read_double_var(ncid, OBSNAME , &(OBS.length));
@@ -107,9 +107,9 @@ CBF1100dev.ET.Attributes(7).Value=2;
 % double * values;
 % size_t unc_length;
 % double * unc;
-% int opt_unc_type;//log-transform data 
+% int opt_unc_type;//log-transform data
 % int opt_normalization;//(0 = none, 1 = remove mean, 2 = divide by mean)
-% int opt_filter;//(0 = no filter, 1 = mean only, 2==annual mean & monthly anomaly, 3 = seasonal cycle & inter-annual anomalies). 
+% int opt_filter;//(0 = no filter, 1 = mean only, 2==annual mean & monthly anomaly, 3 = seasonal cycle & inter-annual anomalies).
 % int opt_structural_error;
 % int opt_mean_only;
 % double min_threshold_value;
@@ -122,11 +122,11 @@ CBF1100dev.ET.Attributes(7).Value=2;
 % int valid_obs_length;//number of non-empty obs
 % int * valid_obs_indices;//indices of non-empty obs
 % }OBS_STRUCT;
-% 
+%
 
 
 
-% 
+%
 % CARDAMOM_WRITE_NC_CBF_FILE(CBF1100dev,nccbftestfiledev);
 % CARDAMOM_WRITE_NC_CBF_FILE(CBF1100dev_noobs,nccbftestfiledev_noobs);
 
@@ -134,12 +134,12 @@ CBF1100dev.ET.Attributes(7).Value=2;
  CBR_noobs=CARDAMOM_RUN_MODEL(CBF1100dev_noobs,cbrfilename1100);
 
 
- 
- 
- 
- 
- 
-%CHeck ET 
+
+
+
+
+
+%CHeck ET
 pts=[1,2,4,5];
 total(-0.5*(CBF1100dev.ET.values(pts)-ET1(pts)').^2./CBF1100dev.ETunc.values(pts).^2)
 
@@ -162,8 +162,8 @@ total(-0.5*(CBF1100dev.ET.values(pts)-ET1(pts)').^2./CBF1100dev.ETunc.values(pts
 
 
 
-% 
-% %Compare CBR against benchmarks 
+%
+% %Compare CBR against benchmarks
  disp('Numerical differences: expected to be ~0')
  disp(minmax(CBR.FLUXES-CBRref.FLUXES))
  disp(minmax(CBR.POOLS-CBRref.POOLS))
@@ -171,7 +171,7 @@ total(-0.5*(CBF1100dev.ET.values(pts)-ET1(pts)').^2./CBF1100dev.ETunc.values(pts
  disp(minmax(CBR.PROB-CBRref.PROB))
 
 
- 
+
 
 disp('**********')
 disp('**********')
@@ -294,7 +294,7 @@ CBFall.OBS.LAI(2:CBFall.nodays,1)=sum(CBRcf.POOLS(1,1:end-1,2)/2+CBRcf.POOLS(1,2
  CBFall.OBS.NBE(1)=CBRcf.NBE(1);
  CBFall.OBS.GPP=CBRcf.GPP(1,:)';
 
- 
+
 CBRall=CARDAMOM_RUN_MODEL(CBFall,cfpars);
 CBRall.PROB
 
@@ -359,6 +359,3 @@ ALL_TESTS(k,:)=[ -0.5, CBRcf.PROB];TEST_NAMES{k}='GPP, 1 obs, 1-delta offset';k=
 
 
 end
-
-
-

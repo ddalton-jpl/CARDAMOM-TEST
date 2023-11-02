@@ -8,7 +8,7 @@ function MCMCoutput=MHMCMC_EXAMPLE
 %references therein; references are at the end of this code).
 %
 %Specifically, this example shows how a number of model parameters (p1,p2,p3,...) can be estimated
-%based on a set of observations (o1, o2, o3,...) and their associated uncertainties 
+%based on a set of observations (o1, o2, o3,...) and their associated uncertainties
 %(u1, u2, u3,...). All necessary information (model, data, parameter info)
 %are externally defined (as shown in this example code) and are passed to
 %MHMCMC.m. The MHMCMC.m routine returns anumber (e.g. 10,000) parameter
@@ -26,7 +26,7 @@ function MCMCoutput=MHMCMC_EXAMPLE
 %MCH4 to monthly observations OCH4 (defined in STEP 1).
 %
 %To use the MHMCMC.m code for estimation of parameters p1 and p2, the
-%following inputs are required: 
+%following inputs are required:
 %(1) DATA: a structure containing all model drivers and observations
 %(2) MLF: the model-likelihood function handle
 %(3) PARS: a structure defining the prior information on parameters p1 and p2
@@ -47,7 +47,7 @@ function MCMCoutput=MHMCMC_EXAMPLE
 %involving a MHMCMC optimization approach. The MHMCMC.m code has been
 %extensively tested, and has been written such that no changes to MHMCMC.m are
 %necessary for each new application (e.g. new model, new observations, etc.).
-%For most MHMCMC applications, all changes can simply be made in the MHMCMC_EXAMPLE code. 
+%For most MHMCMC applications, all changes can simply be made in the MHMCMC_EXAMPLE code.
 %
 %Function last edited on Aug 6th 2015 by A. A. Bloom
 %abloom@jpl.nasa.gov
@@ -73,11 +73,11 @@ DATA.obs=OCH4;
 DATA.obsunc=UCH4;
 
 %*************STEP 2. Define model likelihood function MLF*************
-%INPUTS: 
+%INPUTS:
 %   DATA: all data (DATA structure)
 %   pars: vector with parameter values (in example case, pars(1) is
 %   equivalent to p1, and pars(2) to p(2)).
-%OUTPUTS: 
+%OUTPUTS:
 %   P = log probability (range = -inf to 0)
 %
 %MLF must be defined as a function handle (see below). For example purposes, the full model and model-likelihood functions have already
@@ -95,7 +95,7 @@ MLF=@(DATA,pars) MODEL_LIKELIHOOD_FUNCTION(DATA,pars);
 %       pars_example=[10,2];
 %       MCH4 = WETLAND_CH4_MODEL(DATA,pars);
 %
-%To try the above tests before the MHMCMC (not necessary), un-comment out the next three lines 
+%To try the above tests before the MHMCMC (not necessary), un-comment out the next three lines
 % disp('Test Step: model and MLF functions (see Step 2 instructions)')
 % disp('When done, type "return"')
 % keyboard
@@ -106,7 +106,7 @@ MLF=@(DATA,pars) MODEL_LIKELIHOOD_FUNCTION(DATA,pars);
 %distribution of parameter values p1 and p2.
 %The required fields are the minimum and maximum values of p1 and p2
 %Optional fields include the initial MCMC step size (default = 0.001) and the initial values
-%of p1 and p2 (default = random). 
+%of p1 and p2 (default = random).
 %
 %PARS fields:
 %
@@ -129,14 +129,14 @@ PARS.init=[100,5];
 %number of parameter vector samples
 %
 %MCO.silent: (0,1; default = 0);
-%%silent code: set to 1 to avoid displaying messages 
+%%silent code: set to 1 to avoid displaying messages
 %
 %MCO.nadapt (>0; default = 50);
 %Step-size adaptation frequency: step-size is adjusted based on N samples
 %to optimize MHMCMC performance.
 %
 %MCMC.printfrequency: (>0; default = 10);
-%Display MHMCMC progress every N steps 
+%Display MHMCMC progress every N steps
 %
 %***Additional MCO options***
 %MCO.STOPBEST: (0,1; default 0);
@@ -148,7 +148,7 @@ PARS.init=[100,5];
 %zero results in defficient exploration of parameter space, and incorrect
 %estimates of parameter uncertainty.
 %
-%Example: 
+%Example:
 MCO.nout=100000;
 MCO.printrate=10000;
 MCO.samplerate=20;
@@ -163,7 +163,7 @@ disp('Model: MCH4 = p1 * p2.^(T/10)')
 MCMCoutput=MHMCMC(DATA,MLF,PARS,MCO);
 %*************STEP 6. Plot results*************
 %
-%Example: 
+%Example:
 PLOT_RESULTS(MCMCoutput,DATA)
 
 %Contact:
@@ -233,9 +233,9 @@ ylim([10,55])
 %Making histograms based on parameter (p1 and p2) samples
 %Parameters probability density function (based on latter-half of parameter samples)
 %
-%Note: 
+%Note:
 %- log-transform (log10()) and corresponding re-labeling of xticks in code below is only for plotting & visualization purposes
-%- Actual parameter values are PARSOUT(:,1) and PARSOUT(:,2) 
+%- Actual parameter values are PARSOUT(:,1) and PARSOUT(:,2)
 %- Log-transform step can be very useful for vizualizing parameters spannign one or more orders of magnitude
 %
 %
@@ -281,4 +281,3 @@ function MCH4=WETLAND_CH4_MODEL(DATA,pars)
 %Model run, as a function of parameter vector "pars"
 MCH4=pars(1)*pars(2).^(DATA.temp/10);
 end
-

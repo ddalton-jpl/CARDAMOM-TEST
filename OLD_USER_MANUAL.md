@@ -11,16 +11,16 @@ Test .md link to other file
 Example relative link for subsection
 [GETTING STARTED](MANUAL/GETTING_STARTED.md)
 
-***Anthony Bloom, Gregory R Quetin, Victoria Meyer, Paul Levine, Shuang Ma, Renato Braghiere and others***  
+***Anthony Bloom, Gregory R Quetin, Victoria Meyer, Paul Levine, Shuang Ma, Renato Braghiere and others***
 [If you’re making any edits, add your name here!]
 
 
 ## Ad-hoc material to "file" away in manual contents
 ### Fill value conventions: Nans and -9999
-### DOM = all dead organic C states, SOM = only DALEC soil 
+### DOM = all dead organic C states, SOM = only DALEC soil
 
 
-Sections for partitioned manual 
+Sections for partitioned manual
 "Curator" (or cognizant engineer) = you're in charge of (i) starting a new markdown page and moving content there, and (2) getting other ppl to contribute content where necessary.
 
 Also: link at end of each section to get to next section (e.g. previous, next, and "back to summary", definitely include that in all files).
@@ -47,7 +47,7 @@ Also: link at end of each section to get to next section (e.g. previous, next, a
   * [CARDAMOM Github User Must Read](#cardamom-git-must-read)
   * [CARDAMOM Matlab Demo and Setup Test](#cardamom-with-matlab)
   * [CARDAMOM Python Demo and Setup](#cardamom-with-python)
-  
+
 - [Running CARDAMOM](#running-cardamom)
   * Step 1: CARDAMOM_MDF
   * Step 2: CARDAMOM_RUN_MODEL
@@ -61,7 +61,7 @@ Also: link at end of each section to get to next section (e.g. previous, next, a
 - [The ".cbf.nc" File (CARDAMOM netcdf input files)](#cardamom-cbffile)
   * cbf.nc Fields
   * [Make a new cbf.nc file](#cardamom-make-cbffile)
-  
+
 - [CARDAMOM C developer guide](#cardamom-c-developer-guid)
   * [Intro tips]
   * [Make a new model]
@@ -107,24 +107,24 @@ Step 2. type "git clone https://github.com/CARDAMOM-framework/CARDAMOM_2.1.6c" m
 - See Git Clone FAQ below for troubleshooting
 
 **Do not use .zip approach** (!) unless you only intend to download code once, and do not anticipate collaborating with team.
- 
- 
+
+
  ### git clone FAQ
  Get fatal error when typing "git clone https://github.com/CARDAMOM-framework/CARDAMOM_2.1.6c", what should I do?
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
+
+
+
+
+
+
+
+
+
+
 (NOTE: make link to CARDAMOM GITHUB.md, Shuang's user guide).
 
 
-*SOON TO BE REQUIRED:* 
+*SOON TO BE REQUIRED:*
 + *Install homebrew (if you don’t already have it) (https://brew.sh/)[DETAILS AS NEEDED]*
     * *Install netcdf library (if you don’t already have it)*
     * *type “brew install netcdf” in terminal window (Mac), see step (1) for installing brew. *
@@ -135,7 +135,7 @@ Step 2. type "git clone https://github.com/CARDAMOM-framework/CARDAMOM_2.1.6c" m
 
 ### CARDAMOM Github User Must Read <a name="cardamom-git-must-read">
 
-After you clone the CARDAMOM repository to your local, please take a minute to go through the first section in  [CARDAMOM_GIT_MUST_READ.md](https://github.com/CARDAMOM-framework/CARDAMOM_2.1.6c/blob/master/CARDAMOM_GIT_MUST_READ.md). We recommand all users to follow the instructions in order to effectively maintain the CARDAMOM github environment. 
+After you clone the CARDAMOM repository to your local, please take a minute to go through the first section in  [CARDAMOM_GIT_MUST_READ.md](https://github.com/CARDAMOM-framework/CARDAMOM_2.1.6c/blob/master/CARDAMOM_GIT_MUST_READ.md). We recommand all users to follow the instructions in order to effectively maintain the CARDAMOM github environment.
 
 ### CARDAMOM Matlab Demo and Setup Test <a name="cardamom-with-matlab"/>
 
@@ -158,18 +158,18 @@ Notes:
         - Copy lines from CARDAMOM_2.1.6c/MATLAB/startup_template.m into startup.m file, and adapt as instructed in startup_template.m comments.
         - Save changes to startup.m
         - Make a directory called “DUMPFILES” by typing “mkdir DUMPFILES” in matlab command window OR type "mkdir DUMFILES" in terminal console (in which case, ensure you are in the desired working directory where startup.m is).
-    * Tips: 
+    * Tips:
         - Type “pwd” right after starting matlab to find out current working directory
         - paths in “startup.m” should either be absolute paths, or relative to current working directory
         - to avoid github issues, either:
             + the current working directory needs to be outside the “CARDAMOM” folder, or equivalent github cloned folder (recommended)
-            + (b) make a “.gitignore” file and ensure github ignores all user-made files within the “CARDAMOM_2.1.6c” folder. 
-3. Quit & restart matlab 
-4. Type “which startup” in matlab command window 
+            + (b) make a “.gitignore” file and ensure github ignores all user-made files within the “CARDAMOM_2.1.6c” folder.
+3. Quit & restart matlab
+4. Type “which startup” in matlab command window
     * check matlab is pointing at correct startup.m file
     * In case you encounter issues, more info here (https://www.mathworks.com/help/matlab/ref/startup.html)
 5. Run CARDAMOM_DEMO.
-    * This is a test script to ensure all works well. If you get to the end of the demo script, then you’ve got full CARDAMOM functionality! 
+    * This is a test script to ensure all works well. If you get to the end of the demo script, then you’ve got full CARDAMOM functionality!
     * Type “CARDAMOM_DEMO” in matlab command window
 
 
@@ -247,7 +247,7 @@ CBR=cardamomfun_combine_parameter_chains(CBR);\
 *for Python Users*\
 see Tutorial 2 above
 
-*Recommended MCMC configurations* 
+*Recommended MCMC configurations*
 + Sample 10^5 iterations (MCO.niterations=1e5;) for code testing purposes (e.g. CARDAMOM_DEMO)
 + Sample 10^7 iterations (MCO.niterations=1e7;) for exploratory runs
 + Sample 10^8 iterations (MCO.niterations=1e8;) for final (e.g. publication) runs.
@@ -280,25 +280,25 @@ Make sure to pass string or cell for cbffilename.\
 
 
 
-## CARDAMOM state and flux conventions 
+## CARDAMOM state and flux conventions
 
 - Initial conditions correspond to pools (states) at first timestep t = 0
 - Model Meteorological forcing at timestep t is centered between pools (states) t and t+1
-- Model fluxes at timestep t also centered between states t and t +1 
+- Model fluxes at timestep t also centered between states t and t +1
 
 
 <img width="830" alt="image" src="https://user-images.githubusercontent.com/23563444/117489093-086c5b80-af22-11eb-8006-693c716d142f.png">
 
-*In CARDAMOM C code* 
+*In CARDAMOM C code*
 See conventions above
 
 *For Matlab users*
 CARDAMOM_RUN_MODEL.m throws out first one, but only because it’s repeat of initial conditions (which are contained in parameter vector).
 
 
- 
 
- 
+
+
 
 ## The "cbf.nc" file (CARDAMOM binary input file)<a name="cardamom-cbffile"/>
 
@@ -307,9 +307,9 @@ CARDAMOM_RUN_MODEL.m throws out first one, but only because it’s repeat of ini
 The CBF file contains information on the model's driving meterology (see Appendix: Standard Inputs) and the observations for constraining the model. In addition, the CBF file contains additional information on what model ID to run, uncertainties of observations, parameter priors and uncertainties, and which EDCs to have on. The driving meteorology is often taken from site level measurements or global reanalysis. See Appendix: Data used in CARDAMOM for datasets used priviously in CARDAMOM.
 
 ### .cbf.nc Fields
- 
+
  Example file provided in "DATA/CARDAMOM_DEMO_DRIVERS_prototype.cbf.nc"
- 
+
 
 *Example Meteorological fields, see Appendix: Standard Inputs for variables and units*\
 Time [Days since Jan 01, 2001]\
@@ -322,46 +322,46 @@ Burned area [m2/m2]\
 VPD [hPa]\
 Precip. [mm/day]\
 
-### MCMCID fields 
+### MCMCID fields
  - MCMCID is a .cbf.nc dataset (see "DATA/CARDAMOM_DEMO_DRIVERS_prototype.cbf.nc")
  - The MCMCID value determines the MCMC algorith to be used in CARDAMOM. Currently supported options are:
   - MCMCID = 119: Adaptive Metropolis-Hastings Markov Chain Monte Carlo (Haario et al., 2001)
   - MCMCID = 3: Assymetric Burn-in Differential evolution MCMC (in prep).
  - See below for attributes
  - Default MCMCID value is 119
- 
- 
+
+
  #### nITERATIONS attribute (default = 10000)
  - This determines the number of MCMC iterations (required by both algorithms).
  - Default value is for testing purposes only. See individual MCMCID recommendations for full simulation configurations.
  - Recommend choosing a value which is a multiple of "nSAMPLES" attribute
- 
+
  #### nPRINT attribute (default = 1000)
 -  This at determines the MCMC status printout frequency.
  - An integer value N means the MCMC status will be printed every N iterations.
  - A value of "0" will switch off status printouts.
- 
+
  #### nSAMPLES attribute (default = 2000)
  -  This determines number of samples to be output after MCMC completion
  - This number must be greater or equal to nITERATIONS
  - These samples *include* the MCMC burn-in phase
- - We recommend ensuring nITERATIONS is a multiple of nSAMPLES. 
+ - We recommend ensuring nITERATIONS is a multiple of nSAMPLES.
 
- 
- 
+
+
 ### Make new CBF File <a name="cardamom-make-cbffile"/>
 
 #### Make a new CBF file (Matlab)
-1. Copy an existing CBF structure (CBF=CBFtemplate), OR load an existing file e.g. CBF=CARDAMOM_READ_BINARY_FILEFORMAT(‘cbffile.cbf’)); 
+1. Copy an existing CBF structure (CBF=CBFtemplate), OR load an existing file e.g. CBF=CARDAMOM_READ_BINARY_FILEFORMAT(‘cbffile.cbf’));
 
-2. clear observations CBF=cardamomfun_clear_cbf_obs(CBF);  
+2. clear observations CBF=cardamomfun_clear_cbf_obs(CBF);
 
-3. Replace all CBF.MET with new MET datasets. 
-    * Add zeros if there are no fires. 
-4. Set “CBF.LAT” to equal local latitude (in degrees). 
+3. Replace all CBF.MET with new MET datasets.
+    * Add zeros if there are no fires.
+4. Set “CBF.LAT” to equal local latitude (in degrees).
 
-5. Add observations from new locations. 
-    *Use -9999 for any missing observations in CBF.OBS.* fields.  
+5. Add observations from new locations.
+    *Use -9999 for any missing observations in CBF.OBS.* fields.
 
 ##### Warning! Regularly encountered issues
 
@@ -377,40 +377,40 @@ Precip. [mm/day]\
 
 ## CARDAMOM C developer guide <a name="cardamom-c-developer-guid"/>
 
-### Intro tips. 
+### Intro tips.
 Before doing any of the following, either git branch and/or backup your C code (!!!).\
 Regularly & frequently compile (e.g. CARDAMOM_COMPILE) when making any changes.\
 
 
-### Make a new model. 
+### Make a new model.
 
-Making a new model ID in CARDAMOM (e.g. ID=830), based on original model (e.g. ID=811). To do this:  
+Making a new model ID in CARDAMOM (e.g. ID=830), based on original model (e.g. ID=811). To do this:
 
-1. Open C/projects/CARDAMOM_GENERAL/CARDAMOM_MODEL_LIBRARY.c and create new model identification information (e.g. ID = 830).  
+1. Open C/projects/CARDAMOM_GENERAL/CARDAMOM_MODEL_LIBRARY.c and create new model identification information (e.g. ID = 830).
 
-2. make folder in projects/CARDAMOM_MODELS/DALEC/DALEC_830 (if copied, open all files in folder and rename all instances of e.g. ”811" to “830”).  
+2. make folder in projects/CARDAMOM_MODELS/DALEC/DALEC_830 (if copied, open all files in folder and rename all instances of e.g. ”811" to “830”).
 
-Tips for step 2. 
-+ copy every instance of DALEC_811 and name them DALEC_830. 
+Tips for step 2.
++ copy every instance of DALEC_811 and name them DALEC_830.
 + Compile C code to check if it compiles.
-* (Matlab) You can use “CARDAMOM_COMPILE” in matlab, to see if the code compiles OK.  
+* (Matlab) You can use “CARDAMOM_COMPILE” in matlab, to see if the code compiles OK.
 + *if the above works without issue, then you should be able to change a CBF.ID value to CBF.ID=830 and the model will run (e.g. with CARDAMOM_RUN_MODEL) without issue!*
 + Once you’ve successfully replicated CBF.ID=811 to CBF.ID=830, you can then make model structure changes in DALEC_830.c
 + Keep using “CARDAMOM_COMPILE” every so often (in matlab, and equivalent function elsewhere) to see if your new code compiles OK.
 
 *For matlab users*
-+ Open CARDAMOM_RUN_MODEL.m and add the new model ID to the appropriate “if” statement (e.g. if CBF.ID==1000 || CBF.ID==1001;). 
++ Open CARDAMOM_RUN_MODEL.m and add the new model ID to the appropriate “if” statement (e.g. if CBF.ID==1000 || CBF.ID==1001;).
 
 
 
-### Add more parameters to the model. 
+### Add more parameters to the model.
 ```json
 update this section with instructions for parameter index abstraction
 ```
 
 1. In the folder titled C/projects/CARDAMOM_MODELS/DALEC/DALEC_<newmodelid>, open MODEL_INFO_<newmodelid>.c, and change “DALECmodel.nopars” (e.g. from “33” to “35”)
 
-2. Open PARS_INFO_<newmodelid>.c and add two extra entries at the bottom of the code (with minimum and maximum values). Note: CARDAMOM only supports positive-definite values, if a -ve to +ve range is required, use “exp()” function for -ve to +ve value ranges, and use “log()” to transform these back within DALEC_<newmodelid>.c model. 
+2. Open PARS_INFO_<newmodelid>.c and add two extra entries at the bottom of the code (with minimum and maximum values). Note: CARDAMOM only supports positive-definite values, if a -ve to +ve range is required, use “exp()” function for -ve to +ve value ranges, and use “log()” to transform these back within DALEC_<newmodelid>.c model.
 
 3. *For matlab users*. Run this line in the matlab command window after making any changes to the number of parameters or pools in MODEL_INFO_<newmodelid>.c
 
@@ -432,11 +432,11 @@ MD=CARDAMOM_MODEL_LIBRARY(<newmodelid>,[],1);
 
 (where <newmodelid> is the ID for your new model). This will ensure new model parameter/pool info is registered in matlab.
 
-4. Adapt EDC2_<newmodelid>.c to either 
-    * (a) run EDC checks on new pools or 
+4. Adapt EDC2_<newmodelid>.c to either
+    * (a) run EDC checks on new pools or
     * (b) limit EDC checks to previously existing pools only (check for instances where “nopools” variable is used in loops). This is (unfortunately) a less-than-elegant approach, and we’re working on a comprehensive solution in the long run.
-    * Define prior range for parameters and why log transformed prior range is used 
-    * Avoid using zero as either the minimum or maximum parameter values, as log transformation is used for creating the new parameter values so that there is equal chance being selected within the same magnitude. Log transformation is essential for parameters spanning several magnitudes, like Soil Organic Carbon turnover rate, while doesn’t make a big difference for parameters like Q10; 
+    * Define prior range for parameters and why log transformed prior range is used
+    * Avoid using zero as either the minimum or maximum parameter values, as log transformation is used for creating the new parameter values so that there is equal chance being selected within the same magnitude. Log transformation is essential for parameters spanning several magnitudes, like Soil Organic Carbon turnover rate, while doesn’t make a big difference for parameters like Q10;
 
 #### Two examples make it easier to understand:
 + Soil organic C turnover rate (1e-7 to 1e-3 gC yr-1)
@@ -473,13 +473,13 @@ Files that are Modified:
 3. Add to CARDAMOM_WRITE_BINARY_FILEFORMAT.m
 
 4. Data is available in the data structure for use in Likelihood etc.
-    * Optional: add new cost function module (e.g. DATA_LIKELIHOOD_CH4.c) to use 
+    * Optional: add new cost function module (e.g. DATA_LIKELIHOOD_CH4.c) to use
     * To do this, add cost function module call in CARDAMOM/C/projects/DALEC_CODE/MODEL_LIKELIHOOD_FUNCTIONS/DALEC_ALL_LIKELIHOOD.c
     * If observation field can only be used by subset of models (e.g. DATA.CH4 can only be used by DATA.ID==1010), then add “IF” statement to only run “DATA_LIKELIHOOD_CH4.c” if DATA.ID==1010.
 5. Refer to section ‘Make a new cost function’ to add your new stream to cost function
 
 
- 
+
 
 ### Make a new cost function (soon to be obsolete)
 
@@ -546,7 +546,7 @@ $(sed "${CMD_INDEX}q;d" "$CMD_LIST")
 ```
 
 4. Create a bash file that submits that text file (e.g. 'forwardlist_<filename>.txt') in parallel (Sherlock runs Slurm). Note that for timing, forward runs are much shorter than assimilation runs.
- 
+
 ```bash
 #!/bin/bash
 #SBATCH --ntasks=1
@@ -610,7 +610,7 @@ Sampling 0.01-100 range with uniform distribution
 + ~25% probability for a value between 25-50
 + ~25% probability for a value between 50-75
 + ~25% probability for a value between 75-100
- 
+
 Sampling 0.01-100 range with log-uniform distribution
 + 25% probability for a value between 0.01 – 0.1
 + 25% probability for a value between 0.1-1
@@ -843,8 +843,8 @@ Description: general rules and guidelines for estimating and propagating uncerta
 "rule no 1." (some funny movie reference)
 "Rule no 2.": perform operation on data before calculating uncertainty (on states and fluxes?)
 
-- example: detrending state and flux data. 
-  - Step 1. Detrend every CARDAMOM sample 
+- example: detrending state and flux data.
+  - Step 1. Detrend every CARDAMOM sample
   - Step 2. Calculate percentile/statistics based on detrended dataset.
 
 Other examples:
@@ -878,7 +878,7 @@ Note on above examples: mean GPP IAV is **not** equal to mean of GPP IAV values 
 ***How to aggregate statistics between pixels***
 General issue: no information on correlation between samples between pixels. However, some uncertainty estimation generally required
 
-Dilemma. Two pixels, one with mean GPP = 0.2 gC/m2/d (desert), and another with GPP = 10 gC/m2/d (rainforest). How to you aggregate IAVs (if at all)? 
+Dilemma. Two pixels, one with mean GPP = 0.2 gC/m2/d (desert), and another with GPP = 10 gC/m2/d (rainforest). How to you aggregate IAVs (if at all)?
 
 
 
@@ -911,7 +911,5 @@ Quetin, G. R., Bloom, A. A., Bowman, K. W., & Konings, A. G. (2020). Carbon Flux
 Famiglietti, C.A., Smallman, T.L., Levine, P.A., Flack-Prain, S., Quetin, G.R., Meyer, V., Parazoo, N.C., Stettz, S.G., Yang, Y., Bonal, D. and Bloom, A.A., 2021. Optimal model complexity for terrestrial carbon cycle prediction. Biogeosciences, 18(8), pp.2727-2754.
 
 Bloom, A. A., Bowman, K. W., Liu, J., Konings, A. G., Worden, J. R., Parazoo, N. C., et al. (2020). Lagged effects dominate the inter-annual variability of the 2010-2015 tropical carbon balance (preprint). Biogeochemistry: Land. https://doi.org/10.5194/bg-2019-459
- 
+
 Yin, Y., Bloom, A.A., Worden, J., Saatchi, S., Yang, Y., Williams, M., Liu, J., Jiang, Z., Worden, H., Bowman, K. and Frankenberg, C., 2020. Fire decline in dry tropical ecosystems enhances decadal land carbon sink. Nature communications, 11(1), pp.1-7.
-
-

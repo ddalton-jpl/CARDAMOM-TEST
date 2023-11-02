@@ -91,7 +91,7 @@ CONST.Hconductance= fric_vel/50;%m/s
 CONST.air_density = 1;%kg/m3 %Function of ERA5 pressure/specific humidity/temperature
 CONST.Cp=1004; %J/kg/K %specific heat of air at const pressure
 
-%UNITS CHECK: Hconductance * ( delta_TEMP)*CONST.air_density *CONST.Cp 
+%UNITS CHECK: Hconductance * ( delta_TEMP)*CONST.air_density *CONST.Cp
 %UNITS = J/m2/s
 
 
@@ -117,7 +117,7 @@ SNOW_TEMP(1) = 250;
 
 %E_tsw = M_tsw *c_i*T_tsw T_tsw = E_tsw/(c_i*M_tsw)13:34
 
-%snow2energy= @(snowtemp) (1.0 - fliq) * cice * temp & + fliq * cliq * (temp - tsupercool_liq) 
+%snow2energy= @(snowtemp) (1.0 - fliq) * cice * temp & + fliq * cliq * (temp - tsupercool_liq)
 %IE=(1.0 - fliq) * cice * temp & + fliq * cliq * (temp - tsupercool_liq) ;
 %l = (\frac{Q_{tsw}-Q_{tsw0}}{Q_{tsw1}-Q_{tsw0}})13:40
 
@@ -127,10 +127,10 @@ FUNC.snow_fliq=@(snow_ie_pum, PARS) min(max((snow_ie_pum - PARS.IE_at_0C_solid )
 %Ensure snow_ie is per unit mass
 FUNC.snow_temp=@(snow_ie,PARS) min(snow_ie/PARS.cice,PARS.tp);
 
-    
- 
+
+
 %Arg 1. temp
-%ARg 2. par struct 
+%ARg 2. par struct
 %Arg 3. fliq
 FUNC.snow2energy= @(snowtemp,PARS,fliq) (1.0 - fliq) * PARS.cice * snowtemp + fliq * PARS.cliq * (snowtemp - PARS.tsupercool_liq) ;
 
@@ -143,7 +143,7 @@ FUNC.snow2energy= @(snowtemp,PARS,fliq) (1.0 - fliq) * PARS.cice * snowtemp + fl
  v10=[0.4817    0.9765    0.8134    0.5430    0.1999    0.5219    0.3391    0.2098    0.3396    0.4556    1.0371    0.4066];% Horizontal wind velocity at reference height (z) in m/s
  u10=[0.0191    0.7561    0.9194    0.7794    0.2525    0.5823    0.2504    0.3517    0.1578    0.4720    0.3309    0.3905];
  METDATA.ws10=sqrt(v10.^2+u10.^2);
- 
+
 %  ws2=v10*4.87/ln(67.8*10-5.42);% roughly ws2=0.75*ws10
  PARS.AERO.d=0.7*PARS.AERO.h; % Approximation for zero-plane displacement height
  PARS.AERO.z_0=0.1*PARS.AERO.h; % Approximation for momentum roughness height
@@ -167,22 +167,22 @@ disp('internal energy per area vs internal energy per kg check')
 
 
 for m=1:12
-    
+
     %Step 1. Add snow H2O contribution to snow pack
-    %Note: rain goes straight to surface runoff, 
+    %Note: rain goes straight to surface runoff,
     %ASSUMPTION: liquid precip no interaction with snow energy balance.
-    
+
     %One month timestep (adding snow in mm/month)
     %50mm
     %Assume all snow goes to snowpack
     SNOW_H2O(m+1) = SNOW_H2O(m) + METDATAPRECsnow (m)*deltat;
-    
+
     %Step 2. NEXT STEP, calculate PRECsnow_IE
     %Re-analysis data includes snow:rain fraction
     %For now: assume snow is <= 0C
     %Energy per unit mass X mass
     %(J/m2/day)
-    
+
     %Per unit snow area
     METDATALWup(m)=CONST.emissivity*min(METDATAskintemp(m),PARS.tp).^4*CONST.sigmaSB *24*3600*1e-6;%MJ/m2/d
 %    METDATALWup(m)=CONST.emissivity*SNOW_TEMP(m).^4*CONST.sigmaSB *24*3600*1e-6;%MJ/m2/d
@@ -196,9 +196,9 @@ for m=1:12
         SWNET(m)=METDATASWdown(m)*(1-CONST.albedo)*1e6*deltat;
         LWDOWN(m)=METDATALWdown(m)*CONST.emissivity*1e6*deltat;
         LWnet(m) = LWDOWN(m) -  LWUP(m);
-        
+
     RAD_FLUXES(m)= SWNET(m) +LWnet(m);
-    
+
     %Turbulent fluxes (ground to air flux = +ve)
     %J/m2/s
     %Convention = +ve flux upwards
@@ -207,56 +207,56 @@ for m=1:12
         %Per unit snow area
 
         H(m) =CONST.Hconductance * (min(METDATAskintemp(m),PARS.tp) - (METDATAAIRtemp(m)))*CONST.air_density *CONST.Cp *3600*24*deltat;
-    
+
         %ET = mm/day
         %Evapotranspiration flux
         %J/m2/month
             %Per unit snow area
 
         LE(m) = METDATAET(m)*PARS.latent_heat_sub*CONST.air_density*deltat;
-        
+
         %Turbulent fluxes
         %Convention = +ve flux upward
             %Per unit snow area
 
         TURB_FLUXES(m) = H(m) + LE(m);
       %  TURB_FLUXES(m) = ERA5.H(m) + ERA5.LE(m);
-    
 
-       
+
+
        %ET units = mm/day
        %Water loss internal energy flux
            %Per unit snow area
        ET_MASS_ENERGY_FLUX(m) = METDATAET(m)* FUNC.snow2energy(SNOW_TEMP(m) ,PARS ,0)*deltat;
-       
-%Snow integrated flux (not per unit area)       
+
+%Snow integrated flux (not per unit area)
         SNOW_MASS_ENERGY_FLUX(m)= FUNC.snow2energy(min(METDATAAIRtemp(m)+PARS.tp, PARS.tp),PARS,0) *METDATAPRECsnow(m)*deltat ;
-       
+
         %Surface met mass energy exchange  (excluding melt)
         %Snow input
-        %ET 
-        
+        %ET
+
                 %Shunag has a few option option
-        
+
         SNOW_COVER_FRAC(m)=double(SNOW_H2O(m)>30);
         SNOW_COVER_FRAC(m)=min(SNOW_H2O(m)/100,1);
-        
-        
+
+
 %Assume we get 100% of new snow
 %BUT ET scales with snow cover
 
         MASS_EXCHANGE_ENERGY_FLUXES(m) = SNOW_MASS_ENERGY_FLUX(m) - ET_MASS_ENERGY_FLUX(m)*SNOW_COVER_FRAC(m);
-         
 
-        
-        
+
+
+
     %Track energy in Jules
     %CONTINUE FROM HERE (WHY IS IE NEGATIVE)?
-    %SNOW_IE and MASS_EXCHANGE_ENERGY_FLUXES 
+    %SNOW_IE and MASS_EXCHANGE_ENERGY_FLUXES
          SNOW_IE(m+1) = max(SNOW_IE(m) + MASS_EXCHANGE_ENERGY_FLUXES(m)+ (RAD_FLUXES(m) - TURB_FLUXES(m))*SNOW_COVER_FRAC(m),0);
-         
 
-         
+
+
          %Calculate temperature of snow after enegry exchange.
          if SNOW_H2O(m)>0;
              %if m==3;keyboard;end
@@ -267,9 +267,9 @@ for m=1:12
       % If temp is at zero, snow LF calculation = 0-1
       % If temp is below zero, snow LF calculation = 0
       %CONTINUE FROM HERE: check liquid fraction and internal energy
-      
+
          SNOW_LF(m+1) =  FUNC.snow_fliq(SNOW_IE(m+1)/SNOW_H2O(m), PARS) ;
-         
+
 
 %         me%lt (m) = max(0, (snow_ie - snow_h2o * snow_ie_0C_all_ice));
 
@@ -279,23 +279,23 @@ for m=1:12
          %units =
          %
                  %MELT_ENERGY(m) =  max(0, (SNOW_IE(m+1) - SNOW_H2O(m) *PARS.IE_at_0C_solid));
-                 
+
                  %MELT_IE = SNOW_IE - (1 - SNOW_LF) * SNOW_H2O * PARS.IE_0C_solid
-                 
-                 
+
+
                  %All units = J/m2/month
                  %Quantity = total energy removed through timestep
                  %(timestep is already implicit)
                     %MELT_ENERGY(m) = max(0, SNOW_IE(m+1) - (1 - SNOW_LF(m+1)) * SNOW_H2O(m) * PARS.IE_at_0C_solid);
 
                     %SNOW liq. frac x snow mass
-                    
+
                   MELT_MASS(m) =    SNOW_LF(m+1) * SNOW_H2O(m)  ;
-                  
+
                   MELT_ENERGY(m) =   MELT_MASS(m)* PARS.IE_at_0C_solid;
 
 
-                 
+
                 %MELT(m) = (SNOW_TEMP(m)  -  PARS.tp) *PARS.cice * (SNOW_H2O(m)*(1-SNOW_LF(m));
 
          else
@@ -306,20 +306,20 @@ for m=1:12
 
          end
          %Step 3. Cas
-         
 
-         
-                 %Melt 
+
+
+                 %Melt
         %Mass flux
-        %MELT_MASS_FLUX(m) = 
+        %MELT_MASS_FLUX(m) =
         %Energy flux
     %
-         
-         
+
+
     %    FUNC.snow2energy(SNOW_TEMP(m),PARS,
 
     %FUNC.snow_fliq
-    
+
     %Snow melt at each timestep
     %TO DO NEXT:
     %Calculate melt as a function of change in liquid fraction
@@ -330,19 +330,19 @@ for m=1:12
     %not all) leaves snowpack
     %Option 2 = SNOW_LF is always zero (so snow is drained/dry at
     %begining of each iteration), so no refreezing.
-    
-    
-    
-      
+
+
+
+
     %Snow H2O balance
     %ET units are in mm/day
     SNOW_H2O(m+1) =SNOW_H2O(m) + METDATAPRECsnow(m)*deltat  - METDATAET(m)*deltat - MELT_MASS(m);
-    
+
                       SNOW_IE(m+1) = max(SNOW_IE(m+1) - MELT_ENERGY(m),0);
 
     %Snow internal energy
-    %SNOW_IE(m+1) =SNOW_IE(m) + 
-    
+    %SNOW_IE(m+1) =SNOW_IE(m) +
+
 end
 
 
@@ -392,10 +392,10 @@ load('MATLAB/test_fun/ERAsnow_wyo_2017.mat')
 %forecast_albedo(0-1),
 %potential_eva(m),stl1(K),stl2(K),stl3(K),stl4(K),swvl1(m3/m3),swvl2(m3/m3),swvl3(m3/m3),swvl4(m3/m3),LE(J/m2),H(J/m2)
   %ERAsuppwyo.
-  
+
   ERA5.albedo = ERAsuppwyo.forecast_albedo_0_1_;
   ERA5.albedo = ERAsnowwyo.albsn_0_1_;
-  
+
   deltat=365.25/12;
 
 
@@ -425,7 +425,7 @@ PARS.cliq = 4.186e3; % ! Liquid water specific heat (Cl) [ J/kg/K]
 PARS.tp = 273.16; %triple-point temp.
 PARS.latent_heat_fusion = 334000; % J/kg
 PARS.latent_heat_vap=2.5e6;%J/kg
-%Note: latent heat of vaporization is (more accurately) 
+%Note: latent heat of vaporization is (more accurately)
 %True for any temperature (simplification: not a function of temperature);
 %E..g. look at ED2 or Williams et al., (2012) for linear temp dependence
 %Climate and vegetation controls on the surface water balance: Synthesis of evapotranspiration measured across a global network of flux towers
@@ -454,10 +454,10 @@ if snow_ie(n)>PARS.IE_at_0C_liquid
 
 
     temp=(snow_ie(n))./PARS.cliq + PARS.tsupercool_liq;
-    
+
 elseif snow_ie(n)<PARS.IE_at_0C_solid
-    
-    
+
+
         temp=(snow_ie(n))./PARS.cice;
 
 else
@@ -477,10 +477,10 @@ end
 function cardamomized_snow
 
 
-load  MATLAB/test_fun/ERAforcing_wyo_2008_2017.mat  
+load  MATLAB/test_fun/ERAforcing_wyo_2008_2017.mat
 load CARDAMOM/MATLAB/test_fun/ERAsupp_wyo_2008_2017.mat
 
-% 
+%
 % SWE=ERAsuppwyo.swe_m_;
 % MELT=ERAsnowwyo.smlt_m_;
 % SKIN=ERAsnowwyo.skt_K_;
@@ -502,10 +502,10 @@ ERA5.srad=ERAsnowwyo.SWdown_MJ_m2_d_;
 t1=275;
 t2=0.02;
     MELT_frac_exp=min(1,max((ERA5.skintemp-t1)*t2,0));
-    
-    
+
+
         MELT_frac_exp=min(1,max(((250:290)-t1)*t2,0));
-        
+
         MELT_frac_exp_conc=min(1,max(((ERA5.skintemp)-t1)*t2,0));
 
     %Step 1. plot
@@ -513,7 +513,7 @@ t2=0.02;
     subplot(2,1,1);hold on
     plot(ERA5.skintemp,ERA5.snow_melt./ERA5.swe,'o')
     plot(250:290,MELT_frac_exp,'r')
-    
+
     ylabel('Snow melt / SWE [fraction]')
         subplot(2,1,2);
         plot(ERA5.snow_melt./ERA5.swe,'ko--'); hold on
@@ -524,7 +524,7 @@ t2=0.02;
 
 SWEmodel(1)=300; %Parameter 1. Initial condition
 t1=270; %min threshold for melt
-t2=0.1;% slope 
+t2=0.1;% slope
 deltat=365.25/12;
 for m=1:numel(ERA5.swe);
             MELT_frac(m)=min(max((ERA5.skintemp(m)-t1)*t2,0),1);
@@ -565,7 +565,7 @@ end
 function cardamomized_snow_old
 
 
-load  MATLAB/test_fun/ERAforcing_wyo_2008_2017.mat  
+load  MATLAB/test_fun/ERAforcing_wyo_2008_2017.mat
 
 load CARDAMOM/MATLAB/test_fun/ERAsupp_wyo_2008_2017.mat
 
@@ -596,13 +596,13 @@ ERA5.skintemp=ERA5data.ERAsnowwyo.skt_K_;
 t1=275;
 t2=0.02;
     MELT_frac_exp=min(1,max((ERA5.skintemp-t1)*t2,0));
-    
-    
+
+
         MELT_frac_exp=min(1,max(((250:290)-t1)*t2,0));
 
     %Step 1. plot
     figure(1);clf;hold on;
-    
+
     plot(ERA5.skintemp,ERA5.snow_melt./ERA5.swe,'o')
     plot(250:290,MELT_frac_exp,'r')
     ylabel('Snow melt / SWE [fraction]')
@@ -638,4 +638,3 @@ plot(ERA5.swe,'k','Linewidth',2)
 
 
 end
-

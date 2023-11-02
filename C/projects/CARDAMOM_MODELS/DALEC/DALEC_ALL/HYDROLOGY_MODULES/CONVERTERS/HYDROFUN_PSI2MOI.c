@@ -8,9 +8,9 @@ psi_porosity - porosity potential (MPa)
 b - retention parameter
 */
 
-double HYDROFUN_PSI2MOI(double psi, double psi_porosity, double b){
+double HYDROFUN_PSI2MOI(double psi, double psi_porosity, double b) {
 
-double moi = pow(psi/psi_porosity,(-1/b));
- 
-return moi;
+  double moi = pow(psi / psi_porosity, (-1 / b));
+
+  return moi;
 }

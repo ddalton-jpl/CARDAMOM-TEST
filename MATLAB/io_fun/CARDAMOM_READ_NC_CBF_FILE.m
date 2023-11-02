@@ -11,10 +11,10 @@ ni=ncinfo(filename);
 
 %Step 1. Read all variables
 for n=1:numel(ni.Variables);
-        
+
     CBF.(ni.Variables(n).Name).values=ncread(filename,ni.Variables(n).Name);
-    
-   
+
+
     for a=1: numel(ni.Variables(n).Attributes)
         if strcmp(ni.Variables(n).Attributes(a).Name,  '_FillValue')==0;
             NCV=ni.Variables(n).Attributes(a).Value;
@@ -22,10 +22,5 @@ for n=1:numel(ni.Variables);
     CBF.(ni.Variables(n).Name).(ni.Variables(n).Attributes(a).Name)=NCV;
         end
     end
-    
+
 end
-
-
-
-
-

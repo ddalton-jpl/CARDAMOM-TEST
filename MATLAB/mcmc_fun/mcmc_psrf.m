@@ -9,7 +9,7 @@ function [R,neff,V,W,B] = psrf(varargin)
 %   dimension D. MCMC-simulations can be given as separate
 %   arguments x1,x2,... which should have the same length.
 %
-%   Returns 
+%   Returns
 %     R     PSRF in a row vector of length D
 %     neff  estimated effective number of samples M*N*V/B
 %     V     estimated mixture-of-sequences variances
@@ -38,8 +38,8 @@ function [R,neff,V,W,B] = psrf(varargin)
 % Copyright (C) 1999 Simo Särkkä
 % Copyright (C) 2003 Aki Vehtari
 %
-% This software is distributed under the GNU General Public 
-% Licence (version 2 or later); please refer to the file 
+% This software is distributed under the GNU General Public
+% Licence (version 2 or later); please refer to the file
 % Licence.txt, included with the software, for details.
 
 % 2004-01-22 Aki.Vehtari@hut.fi Added neff, R^2->R, and cleaning
@@ -97,7 +97,7 @@ Bpn = Bpn / (M-1);
 S = (N-1)/N * W + Bpn;
 R = (M+1)/M * S ./ W - (N-1)/M/N;
 V = R .* W;
-R = sqrt(R);  
+R = sqrt(R);
 B = Bpn*N;
 neff = min(M*N*V./B,M*N);
 if onechain & (nargout>1)

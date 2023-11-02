@@ -15,7 +15,7 @@ if isstr(CBF);CBF=CARDAMOM_READ_BINARY_FILEFORMAT(CBF);end
 % %Guarantees CBF.RAW available (soon to be decomissioned).
 CARDAMOM_WRITE_BINARY_FILEFORMAT(CBF,'testnetcdf.cbf')
 CBF=CARDAMOM_READ_BINARY_FILEFORMAT('testnetcdf.cbf');
-% 
+%
 
 %Dimensions
 %nopars
@@ -46,8 +46,8 @@ end
 
 %IMPORTANT NOTE ON NAMES: Do NOT use space charicters in the names of
 %variables or attributes. netCDF does not have well defined behavior around
-%space chars, and they should be avoided at all costs. 
-%For instance, when defining a variable and string attribute, this is ok: 
+%space chars, and they should be avoided at all costs.
+%For instance, when defining a variable and string attribute, this is ok:
     %nccreate(fname,'My_Variable_Name');
     %ncwriteatt(fname,'My_Variable_Name','My_Variable_Attribute_Name', 'This text is the value of the attribute My_Variable_Attribute_Name of variable My_Variable_Name')
 %These are NOT ok:
@@ -67,14 +67,14 @@ nccreate(fname,'EDC'); ncwrite(fname,'EDC',CBF.EDC)
 
 
 %Adjust number as needed. Not urgent for field to dynamically vary
-nccreate(fname,'PARPRIORS','Dimensions',{'nopars',50}); 
+nccreate(fname,'PARPRIORS','Dimensions',{'nopars',50});
 ncwrite(fname,'PARPRIORS',CBF.PARPRIORS)
 nccreate(fname,'PARPRIORUNC','Dimensions',{'nopars'});
 ncwrite(fname,'PARPRIORUNC',CBF.PARPRIORUNC)
 
 
 %Adjust number as needed. Not urgent for field to dynamically vary
-nccreate(fname,'OTHERPRIORS','Dimensions',{'nopars',50}); 
+nccreate(fname,'OTHERPRIORS','Dimensions',{'nopars',50});
 ncwrite(fname,'OTHERPRIORS',CBF.RAW.OTHERPRIORS)
 nccreate(fname,'OTHERPRIORSUNC','Dimensions',{'nopars'});
 ncwrite(fname,'OTHERPRIORSUNC',CBF.RAW.OTHERPRIORSUNC)
@@ -84,26 +84,26 @@ ncwrite(fname,'OTHERPRIORSUNC',CBF.RAW.OTHERPRIORSUNC)
 
 %Other obs
 %Mean biomass
-nccreate(fname,'Mean_Biomass'); 
+nccreate(fname,'Mean_Biomass');
 ncwrite(fname,'Mean_Biomass',CBF.OTHER_OBS.MBiomass.mean)
 ncwriteatt(fname,'Mean_Biomass','Uncertainty',CBF.OTHER_OBS.MBiomass.unc)
 ncwriteatt(fname,'Mean_Biomass','Uncertainty_Type','factor')
 
 %Mean fire
-nccreate(fname,'Mean_Fire'); 
+nccreate(fname,'Mean_Fire');
 ncwrite(fname,'Mean_Fire',CBF.OTHER_OBS.MFire.mean)
 ncwriteatt(fname,'Mean_Fire','Uncertainty',CBF.OTHER_OBS.MFire.unc)
 ncwriteatt(fname,'Mean_Fire','Uncertainty_Type','absolute');
 
 %Mean LAI
-nccreate(fname,'Mean_LAI'); 
+nccreate(fname,'Mean_LAI');
 ncwrite(fname,'Mean_LAI',CBF.OTHER_OBS.MLAI.mean)
 ncwriteatt(fname,'Mean_LAI','Uncertainty',CBF.OTHER_OBS.MLAI.unc)
 ncwriteatt(fname,'Mean_LAI','Uncertainty_Type','absolute');
 
 
 %Mean GPP
-nccreate(fname,'Mean_GPP'); 
+nccreate(fname,'Mean_GPP');
 ncwrite(fname,'Mean_GPP',CBF.OTHER_OBS.MGPP.mean)
 ncwriteatt(fname,'Mean_GPP','Uncertainty',CBF.OTHER_OBS.MGPP.unc)
 ncwriteatt(fname,'Mean_GPP','Uncertainty_Type','absolute');
@@ -115,7 +115,7 @@ ncwriteatt(fname,'Mean_GPP','Uncertainty_Type','absolute');
 %********GPP*****************
 
 nccreate(fname,'GPP','Dimensions',{'time',nodays},'FillValue',-9999);
-%Writing variable 
+%Writing variable
 ncwrite_if_exists(fname,'GPP',CBF.OBS.GPP);
 %Variable attributes
 ncwriteatt(fname,'GPP','Description','Gross Primary Productivity')
@@ -132,7 +132,7 @@ ncwriteatt(fname,'GPP','Uncertainty_Threshold',CBF.OBSUNC.GPP.obs_unc_threshold)
 %********LAI*****************
 
 nccreate(fname,'LAI','Dimensions',{'time',nodays},'FillValue',-9999);
-%Writing variable 
+%Writing variable
 ncwrite_if_exists(fname,'LAI',CBF.OBS.LAI);
 ncwriteatt(fname,'LAI','LAI_data_requirement',CBF.OBSinfo.LAI)
 %Variable attributes
@@ -143,7 +143,7 @@ ncwriteatt(fname,'LAI','Description','Leaf Area Index')
 %********NBE*****************
 
 nccreate(fname,'NBE','Dimensions',{'time',nodays},'FillValue',-9999);
-%Writing variable 
+%Writing variable
 ncwrite_if_exists(fname,'NBE',CBF.OBS.NBE);
 %Variable attributes
 ncwriteatt(fname,'NBE','Description','Net Biospheric Exchange')
@@ -157,7 +157,7 @@ ncwriteatt(fname,'NBE','Annual_Uncertainty',CBF.OBSUNC.NBE.annual_unc)
 %********ABGB*****************
 
 nccreate(fname,'ABGB','Dimensions',{'time',nodays},'FillValue',-9999);%,'Dimensions',{'time',nodays});
-%Writing variable 
+%Writing variable
 ncwrite_if_exists(fname,'ABGB',CBF.OBS.ABGB);
 %Variable attributes
 ncwriteatt(fname,'ABGB','Description','Above- and below-ground biomass')
@@ -170,7 +170,7 @@ ncwriteatt(fname,'ABGB','Uncertainty',CBF.OBSUNC.ABGB.unc);
 %********ET*****************
 
 nccreate(fname,'ET','Dimensions',{'time',nodays},'FillValue',-9999);%,'Dimensions',{'time',nodays});
-%Writing variable 
+%Writing variable
 ncwrite_if_exists(fname,'ET',CBF.OBS.ET);
 %Variable attributes
 ncwriteatt(fname,'ET','Description','Evapotranspiration')
@@ -184,7 +184,7 @@ ncwriteatt(fname,'ET','Uncertainty_Threshold',CBF.OBSUNC.ET.obs_unc_threshold);
 %********EWT*****************
 
 nccreate(fname,'EWT','Dimensions',{'time',nodays},'FillValue',-9999);%,'Dimensions',{'time',nodays});
-%Writing variable 
+%Writing variable
 ncwrite_if_exists(fname,'EWT',CBF.OBS.EWT);
 %Variable attributes
 ncwriteatt(fname,'EWT','Description','Equivalent Water Thickness')
@@ -197,7 +197,7 @@ ncwriteatt(fname,'EWT','Annual_Uncertainty',CBF.OBSUNC.EWT.annual_unc)
 %********SOM*****************
 
 nccreate(fname,'SOM','Dimensions',{'time',nodays},'FillValue',-9999);%,'Dimensions',{'time',nodays});
-%Writing variable 
+%Writing variable
 ncwrite_if_exists(fname,'SOM',CBF.OBS.SOM);
 %Variable attributes
 ncwriteatt(fname,'SOM','Description','Soil organic matter');
@@ -211,7 +211,7 @@ ncwriteatt(fname,'SOM','Uncertainty',CBF.OBSUNC.SOM.unc);
 
 %global attributes
 nccreate(fname,'CH4','Dimensions',{'time',nodays},'FillValue',-9999);
-%Writing variable 
+%Writing variable
 %----- ncwrite(fname,'CH4',CBF.OBS.CH4); %Variable data must not be empty.
 ncwrite_if_exists(fname,'CH4',CBF.OBS.CH4)
 %Description and comments
@@ -227,7 +227,7 @@ ncwriteatt(fname,'CH4','Uncertainty_Threshold',CBF.OBSUNC.CH4.obs_unc_threshold)
 
 %global attributes
 nccreate(fname,'SCF','Dimensions',{'time',nodays},'FillValue',-9999);
-%Writing variable 
+%Writing variable
 %----- ncwrite(fname,'CH4',CBF.OBS.CH4); %Variable data must not be empty.
 ncwrite_if_exists(fname,'SCF',CBF.OBS.SCF)
 %Description and comments
@@ -245,13 +245,13 @@ ncwriteatt(fname,'SCF','Uncertainty_Threshold',CBF.OBSUNC.SCF.obs_unc_threshold)
 %nccreate(fname,'nomet'); ncwrite(fname,'nomet',CBF.nomet)
 
 %*********write CBF met***********
-%nccreate(fname,'MET','Dimensions',{'time', nodays,'nomet',nomet}); 
+%nccreate(fname,'MET','Dimensions',{'time', nodays,'nomet',nomet});
 
 nccreate(fname,'TIME_INDEX','Dimensions',{'time', nodays},'FillValue',-9999);
-nccreate(fname,'T2M_MIN','Dimensions',{'time', nodays},'FillValue',-9999); 
+nccreate(fname,'T2M_MIN','Dimensions',{'time', nodays},'FillValue',-9999);
 nccreate(fname,'T2M_MAX','Dimensions',{'time', nodays},'FillValue',-9999);
-nccreate(fname,'SSRD','Dimensions',{'time', nodays},'FillValue',-9999); 
-nccreate(fname,'CO2','Dimensions',{'time', nodays},'FillValue',-9999); 
+nccreate(fname,'SSRD','Dimensions',{'time', nodays},'FillValue',-9999);
+nccreate(fname,'CO2','Dimensions',{'time', nodays},'FillValue',-9999);
 nccreate(fname,'DOY','Dimensions',{'time', nodays},'FillValue',-9999);
 nccreate(fname,'BURNED_AREA','Dimensions',{'time', nodays},'FillValue',-9999);
 nccreate(fname,'VPD','Dimensions',{'time',nodays},'FillValue',-9999);
@@ -277,13 +277,13 @@ end
 
 
 
-nccreate(fname,'EDCDIAG'); 
+nccreate(fname,'EDCDIAG');
 ncwrite(fname,'EDCDIAG',CBF.EDCDIAG)
 
 
 
 % not sure to keep MET one variable or divide into multiple ones?
-% nccreate(fname,'MET','Dimensions',{}); 
+% nccreate(fname,'MET','Dimensions',{});
 % ncwrite(fname,'MET',CBF.MET)
 
 %Caveat = for some reason, matlab wants variable created before making
@@ -306,11 +306,3 @@ if isempty(F)==0
 end
 
 end
-
-
-
-
-
-
-
-

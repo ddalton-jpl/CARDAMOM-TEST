@@ -8,5 +8,5 @@ CBF=CARDAMOM_READ_BINARY_FILEFORMAT(cbffilename);
 
 
 
-%Step 2. Test 
+%Step 2. Test
 CARDAMOM_CHECK_CBF_FOR_ERRORS(CBF)

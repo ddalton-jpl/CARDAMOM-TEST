@@ -1,6 +1,6 @@
-%NBE 
+%NBE
 
-%Defintions 
+%Defintions
 % NBE = Rh + Rauto + fires - GPP
 
 %Step 1. Reading some outputs
@@ -35,7 +35,7 @@ LCMA=CBR.PARS(:,17);
 LL=CBR.PARS(:,5);
 Ceff = CBR.PARS(:,11);
 
-%step 3.3 
+%step 3.3
 %perturb parameters for sensitivity test
 PARS=CBR.PARS;
 PARS1=PARS;

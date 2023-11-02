@@ -1,4 +1,4 @@
-%Step 1. 
+%Step 1.
 
 
 getenv('CARDAMOM_DATA_PATH')

@@ -1,7 +1,7 @@
 function MA=CARDAMOM_MODEL_LIBRARY(ID,MA,reread)
 %MA=CARDAMOM_MODEL_LIBRARY(ID)
 %
-%INPUTS: CARDAMOM model ID (integer) OR structure with ID field. 
+%INPUTS: CARDAMOM model ID (integer) OR structure with ID field.
 %This function reads C code and extracts model attributes
 %[Cpath]/projects/CARDAMOM_GENERAL/CARDAMOM_MODEL_LIBRARY.c
 %OUTPUTS: "MA" structure with CARDAMOM model attributes:
@@ -10,7 +10,7 @@ function MA=CARDAMOM_MODEL_LIBRARY(ID,MA,reread)
 %MA.nopars: number of model parameters
 %MA.nofluxes: number of stored model fluxes
 %
-%Example: 
+%Example:
 %   MA=CARDAMOM_MODEL_LIBRARY(2);
 %
 %Last modified by A.A. Bloom 2020 June 17
@@ -27,7 +27,7 @@ dumpfile=sprintf('DUMPFILES/CARDAMOM_MODEL_LIBRARY_ID=%i.mat',ID);
 %CARDAMOM_MODEL_LIBRARY.c obsolete
 
 
-% 
+%
 % if reread==1
 % %*****Step 0. Re-run CARDAMOM_ASSEMBLE_MODELS.exe
 % unix(sprintf('./%s/projects/CARDAMOM_GENERAL/CARDAMOM_ASSEMBLE_MODELS.exe %s',Cpath,Cpath));
@@ -86,7 +86,7 @@ else
 parfilename=sprintf('%s/projects/CARDAMOM_MODELS/DALEC/DALEC_%i/DALEC_%i_INDICES.c',Cpath,ID,ID);
  D=readalllines(parfilename);
 
- 
+
 %'/*DALEC PARAMETERS*/'
  k=0;n=1;p=0;
  while k<2;
@@ -99,7 +99,7 @@ parfilename=sprintf('%s/projects/CARDAMOM_MODELS/DALEC/DALEC_%i/DALEC_%i_INDICES
          p=p+1;
          else
              k=2;
-         
+
          end
      end
 
@@ -109,9 +109,9 @@ if strcmp(linestr,'/*DALEC PARAMETERS*/');disp(linestr);k=1;end
 
 
  end
- 
 
- 
+
+
 %'/*DALEC FLUXES*/'
  k=0;n=1;p=0;
  while k<2;
@@ -124,7 +124,7 @@ if strcmp(linestr,'/*DALEC PARAMETERS*/');disp(linestr);k=1;end
          p=p+1;
          else
              k=2;
-         
+
          end
      end
 
@@ -134,7 +134,7 @@ if strcmp(linestr,'/*DALEC FLUXES*/');disp(linestr);k=1;end
 
 
  end
- 
+
 
 %'/*DALEC POOLS*/'
  k=0;n=1;p=0;
@@ -148,7 +148,7 @@ if strcmp(linestr,'/*DALEC FLUXES*/');disp(linestr);k=1;end
          p=p+1;
          else
              k=2;
-         
+
          end
      end
 
@@ -158,16 +158,16 @@ if strcmp(linestr,'/*DALEC POOLS*/');disp(linestr);k=1;end
 
 
  end
- 
 
- 
-  
+
+
+
  MA.PARAMETER_IDs=P;
 MA.FLUX_IDs=F;
 MA.POOL_IDs=S;
- 
- 
- 
+
+
+
 
 
 %******************If FIOMATRIX is available******
@@ -214,7 +214,7 @@ parfilename=sprintf('%s/projects/CARDAMOM_MODELS/DALEC/DALEC_%i/PARS_INFO_%i.c',
  pn=1;
  for n=1:numel(D)
      linestr=D{n};
-     if numel(linestr)>6 & strcmp(linestr(1),'p')==1  
+     if numel(linestr)>6 & strcmp(linestr(1),'p')==1
      %linestr(linestr=='-')='';
      %linestr(linestr=='>')='.';
      b1=find(linestr=='[');
@@ -236,15 +236,15 @@ parfilename=sprintf('%s/projects/CARDAMOM_MODELS/DALEC/DALEC_%i/PARS_INFO_%i.c',
          end
          pn=pn+1;
      end
-     
+
      end
  end
-% 
-% 
+%
+%
  MA.parmin=parmin;
  MA.parmax=parmax;
  MA.parname=parname;
- 
+
 end
 
 
@@ -254,9 +254,9 @@ for f=fieldnames(DALECmodel)';
 end
 
 
- 
- 
- 
+
+
+
  %Random sample
  MA.parrand=@(N) logrand(MA.parmin,MA.parmax,N);
  MA.par2nor=@(pars) log(pars./repmat(MA.parmin,[size(pars,1),1]))./log(repmat(MA.parmax./MA.parmin,[size(pars,1),1]));
@@ -289,8 +289,7 @@ n=1;
 while ischar(A)
     D{n}=A;
     n=n+1;
-    A=fgetl(fid);   
+    A=fgetl(fid);
 end
 
 end
-

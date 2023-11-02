@@ -23,9 +23,3 @@ AK=1 - S*inv(S0);
 %Entropy reduction = 1/2 log2(|S0|) - 1/2 log2 (|S|), from fisher 2003,
 %"Estimation of Entropy Reduction and Degrees of Freedom for Signal for Large Variational Analysis Systems"
 Ered = 0.5*(log2(det(S0)) - log2(det(S)));
-
-
-
-
-
-

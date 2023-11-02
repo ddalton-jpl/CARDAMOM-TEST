@@ -155,13 +155,13 @@ unc =unc0;
 
 % % % P_lik = -0.5*sum((normvec(sum(STATES.EWT(2:121,:),2),3)-normvec(DATA.OBS.EWT(1:120),3)').^2/unc^2);
 % % % % % % % P_lik = -0.5*sum((normvec(sum(STATES.EWT(2:61,:),2),3)-normvec(DATA.OBS.EWT(1:60),3)').^2/unc^2);
-% % % 
+% % %
 % % % % Add Prior
 % % % PARS.EPSF=pars(DATA.PARS_OPT.EPSF.id);
 % % % Pscalefac = PARS.EPSF(2);
 % % % Escalefac = PARS.EPSF(1);
 % % % Pprior = -0.5*( (Pscalefac - 1)^2/0.2^2 + (Escalefac - 1)^2/0.2^2 );
-% % % 
+% % %
 % % % % Add prior to posterior
 % % % % [ P_lik Pprior P ]
 % % % P = P_lik + Pprior;

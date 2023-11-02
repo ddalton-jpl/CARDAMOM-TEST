@@ -19,32 +19,32 @@ Step 2. type "git clone https://github.com/CARDAMOM-framework/CARDAMOM_2.1.6c" m
 
 #### Compiling CARDAMOM
 
-First sreo 
+First sreo
 
-### Tips 
+### Tips
 
 If you are working on a new machine, make sure to re-install required packages like python, homebrew, etc
- 
+
  ### FAQ
 
 
 Q: "i get "Error: could not find any nc-config command." or something like that, what do I do?"
 
  brew install netcdf
- 
+
 Q: "git clone doesn't work, because github needs a key: what do I do now?".
 
 A: To get a github key, follow instructions here: https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account
 
 
- 
+
  Get fatal error when typing "git clone https://github.com/CARDAMOM-framework/CARDAMOM_2.1.6c", what should I do?
- 
- 
+
+
 (NOTE: make link to CARDAMOM GITHUB.md, Shuang's user guide).
 
 
-*SOON TO BE REQUIRED:* 
+*SOON TO BE REQUIRED:*
 + *Install homebrew (if you don’t already have it: https://brew.sh)*
     * *Install netcdf library (if you don’t already have it)*
     * *type “brew install netcdf” in terminal window (Mac), see step (1) for installing brew. *
@@ -61,7 +61,7 @@ A: To get a github key, follow instructions here: https://docs.github.com/en/aut
 
 ### CARDAMOM Github User Must Read <a name="cardamom-git-must-read">
 
-After you clone the CARDAMOM repository to your local, please take a minute to go through the first section in  [CARDAMOM_GIT_MUST_READ.md](https://github.com/CARDAMOM-framework/CARDAMOM_2.1.6c/blob/master/CARDAMOM_GIT_MUST_READ.md). We recommand all users to follow the instructions in order to effectively maintain the CARDAMOM github environment. 
+After you clone the CARDAMOM repository to your local, please take a minute to go through the first section in  [CARDAMOM_GIT_MUST_READ.md](https://github.com/CARDAMOM-framework/CARDAMOM_2.1.6c/blob/master/CARDAMOM_GIT_MUST_READ.md). We recommand all users to follow the instructions in order to effectively maintain the CARDAMOM github environment.
 
 ### CARDAMOM Matlab Demo and Setup Test <a name="cardamom-with-matlab"/>
 

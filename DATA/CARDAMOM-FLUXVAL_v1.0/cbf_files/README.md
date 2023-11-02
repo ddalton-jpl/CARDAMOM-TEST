@@ -1,6 +1,6 @@
-The CARDAMOM driver files in this directory include data that was obtained from 
+The CARDAMOM driver files in this directory include data that was obtained from
 https://fluxnet.org/data/fluxnet2015-dataset/
-under the CC-BY-4.0 data usage license 
+under the CC-BY-4.0 data usage license
 https://creativecommons.org/licenses/by/4.0/
 The original dataset is described in Pastorello et al., (2020).
 Data was adapted for the span and compatibility with CARDAMOM driver files as detailed by Yang et al. (in prep.)

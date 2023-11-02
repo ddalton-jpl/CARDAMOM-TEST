@@ -15,7 +15,7 @@ if isstr(CBF);CBF=CARDAMOM_READ_BINARY_FILEFORMAT(CBF);end
 % %Guarantees CBF.RAW available (soon to be decomissioned).
 CARDAMOM_WRITE_BINARY_FILEFORMAT(CBF,'testnetcdf.cbf')
 CBF=CARDAMOM_READ_BINARY_FILEFORMAT('testnetcdf.cbf');
-% 
+%
 
 %Dimensions
 %nopars
@@ -46,8 +46,8 @@ end
 
 %IMPORTANT NOTE ON NAMES: Do NOT use space charicters in the names of
 %variables or attributes. netCDF does not have well defined behavior around
-%space chars, and they should be avoided at all costs. 
-%For instance, when defining a variable and string attribute, this is ok: 
+%space chars, and they should be avoided at all costs.
+%For instance, when defining a variable and string attribute, this is ok:
     %nccreate(fname,'My_Variable_Name');
     %ncwriteatt(fname,'My_Variable_Name','My_Variable_Attribute_Name', 'This text is the value of the attribute My_Variable_Attribute_Name of variable My_Variable_Name')
 %These are NOT ok:
@@ -82,8 +82,8 @@ ncwriteatt(fname,'MCMCID','seed_number',0.0);
 % ncwriteatt(fname,'lat','valid_min','-90.0')
 % ncwriteatt(fname,'lat','valid_max','90.0')
 % ncwriteatt(fname,'lat','bounds','lat_bnds')
-% 
-% 
+%
+%
 % nccreate(fname,'lon','FillValue',NaN);
 % if isfield(CBF,'LON')==1
 %     ncwrite(fname,'lon',CBF.LON)
@@ -105,13 +105,13 @@ ncwriteatt(fname,'MCMCID','seed_number',0.0);
 
 
 % %Adjust number as needed. Not urgent for field to dynamically vary
-% nccreate(fname,'PARPRIORS','Dimensions',{'nopars',50},'FillValue',NaN); 
+% nccreate(fname,'PARPRIORS','Dimensions',{'nopars',50},'FillValue',NaN);
 % ncwrite(fname,'PARPRIORS',CBF.PARPRIORS)
 % nccreate(fname,'PARPRIORUNC','Dimensions',{'nopars'},'FillValue',NaN);
 % ncwrite(fname,'PARPRIORUNC',CBF.PARPRIORUNC)
-% 
+%
 % %Adjust number as needed. Not urgent for field to dynamically vary
-% nccreate(fname,'OTHERPRIORS','Dimensions',{'nopars',50},'FillValue',NaN); 
+% nccreate(fname,'OTHERPRIORS','Dimensions',{'nopars',50},'FillValue',NaN);
 % ncwrite(fname,'OTHERPRIORS',CBF.RAW.OTHERPRIORS)
 % nccreate(fname,'OTHERPRIORSUNC','Dimensions',{'nopars'},'FillValue',NaN);
 % ncwrite(fname,'OTHERPRIORSUNC',CBF.RAW.OTHERPRIORSUNC)
@@ -127,21 +127,21 @@ ncwriteatt_if_exists_else_fill(fname,'Mean_Biomass','ignore','opt_unc_type',CBF.
 ncwriteatt_if_exists_else_fill(fname,'Mean_Biomass','ignore','min_threshold',CBF.OTHER_OBS.MBiomass,-9999)
 
 %Mean fire
-nccreate(fname,'Mean_Fire','FillValue',-9999); 
+nccreate(fname,'Mean_Fire','FillValue',-9999);
 ncwrite(fname,'Mean_Fire',CBF.OTHER_OBS.MFire.mean)
 ncwriteatt(fname,'Mean_Fire','unc',CBF.OTHER_OBS.MFire.unc)
 ncwriteatt_if_exists_else_fill(fname,'Mean_Fire','ignore','opt_unc_type',CBF.OTHER_OBS.MBiomass,-9999)
 ncwriteatt_if_exists_else_fill(fname,'Mean_Fire','ignore','min_threshold',CBF.OTHER_OBS.MBiomass,-9999)
 
 %Mean LAI
-nccreate(fname,'Mean_LAI','FillValue',-9999); 
+nccreate(fname,'Mean_LAI','FillValue',-9999);
 ncwrite(fname,'Mean_LAI',CBF.OTHER_OBS.MLAI.mean)
 ncwriteatt(fname,'Mean_LAI','unc',CBF.OTHER_OBS.MLAI.unc)
 ncwriteatt_if_exists_else_fill(fname,'Mean_LAI','ignore','opt_unc_type',CBF.OTHER_OBS.MLAI,-9999)
 ncwriteatt_if_exists_else_fill(fname,'Mean_LAI','ignore','min_threshold',CBF.OTHER_OBS.MLAI,-9999)
 
 %Mean GPP
-nccreate(fname,'Mean_GPP','FillValue',-9999); 
+nccreate(fname,'Mean_GPP','FillValue',-9999);
 ncwrite(fname,'Mean_GPP',CBF.OTHER_OBS.MGPP.mean)
 ncwriteatt(fname,'Mean_GPP','unc',CBF.OTHER_OBS.MGPP.unc)
 ncwriteatt_if_exists_else_fill(fname,'Mean_GPP','ignore','opt_unc_type',CBF.OTHER_OBS.MGPP,-9999)
@@ -154,7 +154,7 @@ ncwriteatt_if_exists_else_fill(fname,'Mean_GPP','ignore','min_threshold',CBF.OTH
 
 nccreate(fname,'GPP','Dimensions',{'time',nodays},'FillValue',-9999);
 nccreate(fname,'GPPunc','Dimensions',{'time',nodays},'FillValue',-9999);
-%Writing variable 
+%Writing variable
 ncwrite_if_exists(fname,'GPP',CBF.OBS.GPP);
 %Variable attributes
 ncwriteatt(fname,'GPP','opt_unc_type',-9999)
@@ -185,7 +185,7 @@ ncwriteatt_if_exists_else_fill(fname,'GPP','obs_unc_threshold','min_threshold',C
 
 nccreate(fname,'LAI','Dimensions',{'time',nodays},'FillValue',-9999);
 nccreate(fname,'LAIunc','Dimensions',{'time',nodays},'FillValue',-9999);
-%Writing variable 
+%Writing variable
 ncwrite_if_exists(fname,'LAI',CBF.OBS.LAI);
 % ncwriteatt(fname,'LAI','LAI_data_requirement',CBF.OBSinfo.LAI)
 %Variable attribute
@@ -218,7 +218,7 @@ end
 
 nccreate(fname,'NBE','Dimensions',{'time',nodays},'FillValue',-9999);
 nccreate(fname,'NBEunc','Dimensions',{'time',nodays},'FillValue',-9999);
-%Writing variable 
+%Writing variable
 ncwrite_if_exists(fname,'NBE',CBF.OBS.NBE);
 %Variable attributes
 ncwriteatt(fname,'NBE','Description','Net Biospheric Exchange')
@@ -248,7 +248,7 @@ nccreate(fname,'ABGB','Dimensions',{'time',nodays},'FillValue',-9999);
 nccreate(fname,'ABGBunc','Dimensions',{'time',nodays},'FillValue',-9999);
 % ncwriteatt(fname,'ABGB','Description','Above- and below-ground biomass')
 % ncwriteatt(fname,'ABGB','info',CBF.OBSUNC.ABGB.info)
-%Writing variable 
+%Writing variable
 ncwrite_if_exists(fname,'ABGB',CBF.OBS.ABGB);
 ncwriteatt(fname,'ABGB','opt_unc_type',-9999)
 ncwriteatt(fname,'ABGB','opt_normalization',-9999)
@@ -273,7 +273,7 @@ ncwriteatt_if_exists_else_fill(fname,'ABGB','obs_unc_threshold','min_threshold',
 
 nccreate(fname,'ET','Dimensions',{'time',nodays},'FillValue',-9999);
 nccreate(fname,'ETunc','Dimensions',{'time',nodays},'FillValue',-9999);
-%Writing variable 
+%Writing variable
 ncwrite_if_exists(fname,'ET',CBF.OBS.ET);
 %Variable attributes
 % ncwriteatt(fname,'ET','Description','Evapotranspiration')
@@ -299,7 +299,7 @@ ncwriteatt_if_exists_else_fill(fname,'ET','obs_unc_threshold','min_threshold',CB
 
 nccreate(fname,'EWT','Dimensions',{'time',nodays},'FillValue',-9999);
 nccreate(fname,'EWTunc','Dimensions',{'time',nodays},'FillValue',-9999);
-%Writing variable 
+%Writing variable
 ncwrite_if_exists(fname,'EWT',CBF.OBS.EWT);
 %Variable attributes
 % ncwriteatt(fname,'EWT','Description','Equivalent Water Thickness')
@@ -325,7 +325,7 @@ ncwriteatt_if_exists_else_fill(fname,'EWT','obs_unc_threshold','min_threshold',C
 
 nccreate(fname,'SOM','Dimensions',{'time',nodays},'FillValue',-9999);
 nccreate(fname,'SOMunc','Dimensions',{'time',nodays},'FillValue',-9999);
-%Writing variable 
+%Writing variable
 ncwrite_if_exists(fname,'SOM',CBF.OBS.SOM);
 %Variable attributes
 % ncwriteatt(fname,'SOM','Description','Soil organic matter');
@@ -357,7 +357,7 @@ ncwriteatt_if_exists_else_fill(fname,'SOM','obs_unc_threshold','min_threshold',C
 %global attributes
 nccreate(fname,'CH4','Dimensions',{'time',nodays},'FillValue',-9999);
 nccreate(fname,'CH4unc','Dimensions',{'time',nodays},'FillValue',-9999);
-%Writing variable 
+%Writing variable
 %----- ncwrite(fname,'CH4',CBF.OBS.CH4); %Variable data must not be empty.
 ncwrite_if_exists(fname,'CH4',CBF.OBS.CH4)
 %Description and comments
@@ -386,7 +386,7 @@ ncwriteatt_if_exists_else_fill(fname,'CH4','obs_unc_threshold','min_threshold',C
 
 % %global attributes
 % nccreate(fname,'SCF','Dimensions',{'time',nodays},'FillValue',-9999);
-% %Writing variable 
+% %Writing variable
 % %----- ncwrite(fname,'CH4',CBF.OBS.CH4); %Variable data must not be empty.
 % %check if field exists in the input CBF
 % if isfield(CBF.OBS,'SCF')==1
@@ -408,14 +408,14 @@ ncwriteatt_if_exists_else_fill(fname,'CH4','obs_unc_threshold','min_threshold',C
 %nccreate(fname,'nomet'); ncwrite(fname,'nomet',CBF.nomet)
 
 %*********write CBF met***********
-%nccreate(fname,'MET','Dimensions',{'time', nodays,'nomet',nomet}); 
+%nccreate(fname,'MET','Dimensions',{'time', nodays,'nomet',nomet});
 
 % nccreate(fname,'TIME_INDEX','Dimensions',{'time', nodays},'FillValue',-9999);
 nccreate(fname,'time','Dimensions',{'time', nodays},'FillValue',-9999);
-nccreate(fname,'T2M_MIN','Dimensions',{'time', nodays},'FillValue',-9999); 
+nccreate(fname,'T2M_MIN','Dimensions',{'time', nodays},'FillValue',-9999);
 nccreate(fname,'T2M_MAX','Dimensions',{'time', nodays},'FillValue',-9999);
-nccreate(fname,'SSRD','Dimensions',{'time', nodays},'FillValue',-9999); 
-nccreate(fname,'CO2','Dimensions',{'time', nodays},'FillValue',-9999); 
+nccreate(fname,'SSRD','Dimensions',{'time', nodays},'FillValue',-9999);
+nccreate(fname,'CO2','Dimensions',{'time', nodays},'FillValue',-9999);
 nccreate(fname,'DOY','Dimensions',{'time', nodays},'FillValue',-9999);
 nccreate(fname,'BURNED_AREA','Dimensions',{'time', nodays},'FillValue',-9999);
 nccreate(fname,'VPD','Dimensions',{'time',nodays},'FillValue',-9999);
@@ -467,11 +467,3 @@ else
 end
 
 end
-
-
-
-
-
-
-
-

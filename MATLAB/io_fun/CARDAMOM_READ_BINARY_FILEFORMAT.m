@@ -14,7 +14,7 @@ function [CBF,ANCILLARY]=CARDAMOM_READ_BINARY_FILEFORMAT(filename,INFO)
 
 if nargin==0
     error('Need to provide .cbf or .cbr file');
-elseif nargin==1 
+elseif nargin==1
     if filename(end)=='r'; %i.e. reading cbr file
     error('Need to provide INFO struct for cbr file');
     else
@@ -66,7 +66,7 @@ k=k+50;
 %Prior information
 CBF.PARPRIORS=PR;
 CBF.PARPRIORUNC=PRU;
-%Other constraints 
+%Other constraints
 %List explicitly here
 CBF=read_other_obs_constraints(CBF,OPR,OPRU);
 
@@ -101,7 +101,7 @@ TEMPDATA(1:end)=BD(k+1:k+numel(TEMPDATA));
 
 %All met data
 CBF.MET=TEMPDATA(1:CBF.nomet,1:CBF.nodays)';
-%All observations (if any) 
+%All observations (if any)
 %1st column = GPP
 %2nd column = LAI
 %3rd column = NEE
@@ -138,7 +138,7 @@ for n=1:numel(obsnames);%CBF.noobs;
                        CBF.OBS.(obsnames{n})=[];
        end
 end
-    
+
 
 CBF.OBSinfo.LAI='LAI data requirements: should be +ve definite (>0); assumed uncertainty for LAI timeseries is factor of 2; future versions will include user-defined uncertainty options';
 CBF.OBSinfo.uncertainty_factors='Uncertainty structures for positive-definite quantities (GPP, LAI, ET), are prescribed as uncertainty factors (by default); uncertainty factors should be > 1. \n For example: a 1-sigma range for 100 uncertainty factor 2 = 100/2 - 100*2 = 50 - 200 ';
@@ -146,7 +146,7 @@ end
 %Uncertainties for time-resolved observations
 function CBF=read_obs_uncertainty_fields(CBF,SD,OPRU);
 
-%From CARDAMOM_READ_BINARY_DATA.c 
+%From CARDAMOM_READ_BINARY_DATA.c
 % DATA->nee_annual_unc=statdat[13];
 % DATA->et_annual_unc=statdat[14];
 % DATA->nee_obs_unc=statdat[15];if (statdat[15]<0){DATA->nee_obs_unc=0.5;}
@@ -164,7 +164,7 @@ CBF.OBSUNC.NBE.annual_unc=SD(14);
 CBF.OBSUNC.NBE.seasonal_unc=SD(16);
 CBF.OBSUNC.NBE.info='Single point (default = 0.5, must be >0) and annual (annual_unc) NBE uncertainty [gC/m2/d]';
 
-%ET 
+%ET
 CBF.OBSUNC.ET.annual_unc=SD(15);
 CBF.OBSUNC.ET.unc=SD(17);
 CBF.OBSUNC.ET.obs_unc_threshold=SD(22);%Default = 0.1
@@ -175,7 +175,7 @@ CBF.OBSUNC.EWT.annual_unc=SD(18);
 CBF.OBSUNC.EWT.unc=SD(19);
 CBF.OBSUNC.EWT.info=sprintf('Single point (default = 50) and annual (N/A yet) EWT uncertainty [mm]');
 
-%GPP 
+%GPP
 CBF.OBSUNC.GPP.annual_unc=SD(20);
 CBF.OBSUNC.GPP.unc=SD(21);
 CBF.OBSUNC.GPP.info=sprintf('Single point uncertaint factor (default = */ +2, must be >1) and annual (annual_unc) GPP uncertainty [gC/m2/d]\n default obs unc threshold is 0.1gC/m2/d: this ensures log-tranformed model GPP values are insensitive to GPP<0.1');
@@ -203,7 +203,7 @@ CBF.OBSUNC.ABGB.info=sprintf('Uncertainty *factor* on time-resolved biomass CBF.
 
 
 end
-%other (time-invariant) constraints 
+%other (time-invariant) constraints
 function CBF=read_other_obs_constraints(CBF,OPR,OPRU)
 %Mean biomass
 CBF.OTHER_OBS.MBiomass.mean=OPR(1);
@@ -236,7 +236,7 @@ function [PARSALL,ANCILLARY]=read_cbr_file(filename,INFO)
 PARSALL=[];
 CHAINALL=[];
 
-%for wildcard option; 
+%for wildcard option;
 if isstr(filename);filename=auxifun_fullpathdir(filename);end
 
 for n=1:numel(filename)
@@ -245,7 +245,7 @@ disp(sprintf('CHECK: .cbr file "%s" successfully read into matlab.',filename{n})
 
 
 if isempty(dir(filename{n}))==0
-    %number of parameter sets 
+    %number of parameter sets
     fd=fopen(filename{n});if fd==-1;disp('WARNING: file not opened, expect error!!');end;av=fread(fd,inf,'real*8');fclose(fd);N=numel(av)/INFO.nopars;
     PARS=readbinarymat(filename{n},[N,INFO.nopars])';
 
@@ -295,4 +295,3 @@ end
 
 
 %***************
-

@@ -32,7 +32,7 @@ The CARDAMOM netcdf input file is a "one-stop shop" for all inputs required to c
 | ----------------------------------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------------------------------- |
 | ABGB                                                                                | Above and belowground biomass                            | g C/m<sup>2</sup>/day (grams of carbon per meters squared)                       |
 | CH4                                                                                 | Methane                                                  | g CH4/m<sup>2</sup>/day (grams of methane per meters squared per day)            |
-| ET                                                                                  | Evapotranspiration                                       | mm/day (millimeters per day) equivalent to kg H2O/m<sup>2</sup>/day (kilograms water per meters squared per day)                                                    
+| ET                                                                                  | Evapotranspiration                                       | mm/day (millimeters per day) equivalent to kg H2O/m<sup>2</sup>/day (kilograms water per meters squared per day)
 | EWT                                                                                 | Equivalent Water Thickness                               | cm (centimeters)                                                                 |
 | GPP                                                                                 | Gross primary productivity or Solar induced fluorescence |  g CO2/m<sup>2</sup>/day (grams of carbon dioxide per meters squared per day) or |
 | LAI                                                                                 | Leaf area index                                          | m<sup>2</sup>/m<sup>2</sup>(meters squared per meters squared)                   |
@@ -65,6 +65,3 @@ The CARDAMOM netcdf input file is a "one-stop shop" for all inputs required to c
 ## FAQ
 ### Q: If I’m not assimilating an observation, can I just delete the corresponding OBS field my cbf.nc file, or do I have to keep it and put NaN in the corresponding subsets?
 Answer: you can delete it
-
-
- 

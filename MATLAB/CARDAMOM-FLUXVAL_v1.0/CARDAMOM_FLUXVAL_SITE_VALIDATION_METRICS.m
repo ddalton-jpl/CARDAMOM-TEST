@@ -6,7 +6,7 @@ function CARDAMOM_FLUXVAL_SITE_VALIDATION_METRICS % VALIDATE_CARDAMOM_MODEL
 %Runs in Yang et al. used 10^8 samples x 4 chains per site,these take about 2-5 hours per site per chain.
 %To replicate these results (e.g. at more than a handful of sites), consider parallelizing with CPU cluster for running all sites.
 %To reproduce Yang et al., results using existing data:
-% (1) Download the data from Zenodo source (see Yang et al., for details) 
+% (1) Download the data from Zenodo source (see Yang et al., for details)
 % (2) comment out "CBR=CARDAMOM_RUN_MDF(CBF,MCO);" and work through "INSTRUCTIONS FOR RUNNING EXISTING PARAMETER SETS" (see below).
 %For general information on using CARDAMOM, consult MANUAL.md.
 %Number of MCMC iterations
@@ -23,7 +23,7 @@ for n=1:size(data,1)
     CBF=CARDAMOM_READ_BINARY_FILEFORMAT([fluxval_path,'cbf_files/flux_site_' num2str(n) '.cbf']);
     %*****NOTES FOR DERIVING NEW PARAMETER SETS***************
     % * This is the function for running CARDAMOM on local machine.
-    % * Runs in Yang et al. used 10^8, these take about 3-5 hours per site, below runs are for testing purposes only. 
+    % * Runs in Yang et al. used 10^8, these take about 3-5 hours per site, below runs are for testing purposes only.
     % * Consider parallelizing with CPU cluster for running all sites.
     % * To run more than one parameter chain, you can append "CARDAMOM_RUN_MDF" line as follows
     %   - for chain=1:4;     CBR(chain)=CARDAMOM_RUN_MDF(CBF,MCO); end
@@ -38,7 +38,7 @@ for n=1:size(data,1)
     CBR=CARDAMOM_RUN_MDF(CBF,MCO);
 
     vdata=table2array(readtable([fluxval_path,'validation_data/validation_' data.Flux_name{n} '.csv']));% first col is the number of monthsfrom 2000/01/01; second col is date; the 3rd to 5th col is GPP, NEE and ET
-    site_name=[data.Flux_name{n}(1:2) '_' data.Flux_name{n}(4:end)]; 
+    site_name=[data.Flux_name{n}(1:2) '_' data.Flux_name{n}(4:end)];
     [M1,M2]= VALIDATE_OUTPUTS_AGAINST_SITE_DATA(CBR,vdata,site_name);
     Mseason.(site_name)=M1.(site_name);
     Mannual.(site_name)=M2.(site_name);
@@ -49,7 +49,7 @@ for n=1:size(data,1)
 end
 %This will be saved in your current directory,
 %ensure that this is outside github repo
-save('site_mertrics.mat','Mseason','Mannual'); 
+save('site_mertrics.mat','Mseason','Mannual');
 end
 
 %Section 2: validation statistics

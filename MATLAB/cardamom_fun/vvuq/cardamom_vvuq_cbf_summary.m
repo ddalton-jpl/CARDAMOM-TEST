@@ -46,9 +46,9 @@ figure(2);clf
 ofn=fields(CBF.OBS);
 for n=1:numel(ofn)
     subplot(3,4,n);
-    
-    %plotting 
-    
+
+    %plotting
+
     plot(fill2nan(CBF.OBS.(ofn{n})));title(ofn{n});
     if isempty(CBF.OBS.(ofn{n}));set(gca,'Color','None');end
 end
@@ -64,7 +64,7 @@ disp(sprintf('%s =%g',strjust(sprintf('%50s',fn{nn})),CBF.OBSUNC.(oufn{n}).(fn{n
     end
 end
 end
-    
+
 
 disp('*********OTHER OBS*********')
 oufn=fields(CBF.OTHER_OBS);

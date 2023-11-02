@@ -1,9 +1,9 @@
 function varargout=CARDAMOM_WRITE_BINARY_FILEFORMAT(CBF,filename)
 %function CARDAMOM_WRITE_BINARY_FILEFORMAT(CBF,filename)
 %
-%INPUTS: 
+%INPUTS:
 % - CBF: CARAMOM binary structure
-% - "filename": name of file 
+% - "filename": name of file
 %Writes CBF structure to CARDAMOM binary file (.cbf) format
 %See CARDAMOM_READ_BINARY_FILEFORMAT.m for obtaining a "CBF" structure
 %template
@@ -18,7 +18,7 @@ elseif nargout==1;
 end
 
 if strcmp(filename(end-2:end),'cbr') | strcmp(filename(end-7:end),'cbrSTART');write_cbr_file(CBF,filename);end
-    
+
 
 end
 
@@ -32,7 +32,7 @@ PARSALL=CBF';
 
 
 
-    %number of parameter sets 
+    %number of parameter sets
     fd=fopen(filename,'w');if fd==-1;disp('WARNING: file not opened, expect error!!');end;fwrite(fd,PARSALL(:),'real*8');fclose(fd);
 
 
@@ -89,11 +89,11 @@ SD(1:7)=[CBF.ID;CBF.LAT;CBF.nodays;CBF.nomet;CBF.noobs;CBF.EDC;CBF.EDCDIAG];
 %Prescribe reference met:
 if isfield(CBF,'mmet') & numel(CBF.mmet)==CBF.nomet
     MTEMPDATA=[CBF.mmet,zeros(1,CBF.noobs)-9999];
-else 
+else
     MTEMPDATA=[];
 end
-    
-    
+
+
 ALLTEMPDATA=[[CBF.MET,CBF.OBS];MTEMPDATA]';
 %Order = timestep1 (met, obs), timestep2 (met, obs)....
 TEMPDATA=ALLTEMPDATA(1:end)';
@@ -148,10 +148,10 @@ end
 end
 
 else
-    %FIlling in OBS with -9999 values;  
+    %FIlling in OBS with -9999 values;
      %Eventually step can be made obsolete when C code can accept
      %(1) noobs, and (2) obsid
-     
+
         CBFOBS=zeros(size(CBF.MET,1),3)-9999;
 end
 
@@ -162,7 +162,7 @@ end
 %Time-resolved observation uncertainties
 function [SD,OPRU]=write_obs_uncertainty_fields(CBF,SD,OPRU)
 
-%From CARDAMOM_READ_BINARY_DATA.c 
+%From CARDAMOM_READ_BINARY_DATA.c
 % DATA->nee_annual_unc=statdat[13];
 % DATA->et_annual_unc=statdat[14];
 % DATA->nee_obs_unc=statdat[15];if (statdat[15]<0){DATA->nee_obs_unc=0.5;}
@@ -180,7 +180,7 @@ SD(14)=CBF.OBSUNC.NBE.annual_unc;
 SD(16)=CBF.OBSUNC.NBE.seasonal_unc;
 %CBF.OBSUNC.NBE.info='Single point (default = 0.5) and annual (annual_unc) NBE uncertainty [gC/m2/d]';
 
-%ET 
+%ET
 SD(15)=CBF.OBSUNC.ET.annual_unc;
 SD(17)=CBF.OBSUNC.ET.unc;
 %CBF.OBSUNC.ET.info='Single point (default = 2) and annual (annual_unc) ET uncertainty [mm/d]';
@@ -190,7 +190,7 @@ SD(18)=CBF.OBSUNC.EWT.annual_unc;
 SD(19)=CBF.OBSUNC.EWT.unc;
 %CBF.OBSUNC.EWT.info=sprintf('Single point (default = 50) and annual (N/A yet) EWT uncertainty [mm]');
 
-%GPP 
+%GPP
 SD(20)=CBF.OBSUNC.GPP.annual_unc;
 SD(21)=CBF.OBSUNC.GPP.unc;
 %CBF.OBSUNC.GPP.info='Single point (default = 2) and annual (annual_unc) GPP uncertainty [gC/m2/d]';
@@ -223,7 +223,7 @@ if isfield(CBF.OBS,'SOM') & isempty(CBF.OBS.SOM)==0 & CBF.OBSUNC.SOM.unc==-9999;
 
 end
 
-%other (time-invariant) constraints 
+%other (time-invariant) constraints
 function [OPR,OPRU]=write_other_obs_constraints(CBF,OPR,OPRU);
 
 %Mean biomass
@@ -248,5 +248,3 @@ OPRU(6)=CBF.OTHER_OBS.MGPP.unc;
 
 
 end
-
-

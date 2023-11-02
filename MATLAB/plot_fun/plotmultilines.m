@@ -3,7 +3,7 @@ function [mh,ch,fh]=plotmultilines(x,ymat,mmopt,CMP,linecol)
 %works just like plot, but plots mean with filled-in confidence ranges.
 %uses all rows of ymat to make line y
 %INPUTS:
-%x - 1xN vector of x coordinates (set to y if only one input is assigned) 
+%x - 1xN vector of x coordinates (set to y if only one input is assigned)
 %y - MxN array of y coordinate ensemble with M members (e.g. an ensemble of M lines)
 %mmopt - plots a line of the ensemble mean if set to zero (default) or
 %plots nth member if set to mmopt=n
@@ -40,7 +40,7 @@ defval('ymat',[])
 if isempty(ymat)==1;
     ymat=x;
     x=1:size(ymat,2);
-    
+
 end
 nc=size(ymat,2);
 
@@ -53,7 +53,7 @@ CRN=20;
 
 %confidence ranges
 mpr=0+100/(CRN*2):100/CRN:100;
-    
+
 %colors for each confidence  range
 COLORS=flipud(interp1(0:100/(size(CMP,1)-1):100,CMP,mpr));
 % %whitening correction
@@ -68,18 +68,18 @@ COLORS=flipud(interp1(0:100/(size(CMP,1)-1):100,CMP,mpr));
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-    
+
 
     yprc=zeros(2,nc,length(mpr));
         for nc=1:size(ymat,2)
         yprc(1,nc,:)=percentile(ymat(:,nc)',[50-mpr/2])';
         yprc(2,nc,:)=percentile(ymat(:,nc)',[50+mpr/2])';
         end
-        
+
         hold on
-    
-    
-  for nn=length(mpr):-1:1 
+
+
+  for nn=length(mpr):-1:1
 
     %plotting percentile polygons
     fh(nn)=fill([x,x(end:-1:1)],[yprc(1,:,nn),fliplr(yprc(2,:,nn))],COLORS(nn,:));
@@ -87,19 +87,19 @@ COLORS=flipud(interp1(0:100/(size(CMP,1)-1):100,CMP,mpr));
  end
 
 
- 
+
  %plotting either mean or user-defined line on top of precentile polygons.
  if mmopt==0 & isempty(linecol)==0
      %mean
      mh=plot(x,median(ymat,1),'Color',linecol,'Linewidth',2);
  elseif mmopt>0 & isempty(linecol)==0
  %plot nth curve as main curve
-     mh=plot(x,ymat(mmopt,:),'Color',linecol)   ;    
+     mh=plot(x,ymat(mmopt,:),'Color',linecol)   ;
  else
      mh=[];
  end
- 
- 
+
+
  %COLORBAR
  colormap(flipud(COLORS));
  ch=colorbar;
@@ -109,7 +109,7 @@ COLORS=flipud(interp1(0:100/(size(CMP,1)-1):100,CMP,mpr));
 
   %subsampling perclow
   perclow=5:10:45;perchigh=100-[5:10:45];
-  
+
   set(ch,'Ytick',perclow)
   yl=ylabel(ch,'confidence range');set(yl,'FontSize',get(gca,'FontSize'));
   for n=1:length(perclow)
@@ -121,5 +121,3 @@ COLORS=flipud(interp1(0:100/(size(CMP,1)-1):100,CMP,mpr));
   %OK done with colorbar
 
 end
-
-
